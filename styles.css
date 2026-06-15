@@ -1,0 +1,9 @@
+body { font-family: 'Segoe UI', sans-serif; margin: 0; line-height: 1.6; background: #f4f4f9; }
+nav { display: flex; justify-content: space-between; padding: 1rem 5%; background: #333; color: white; }
+nav a { color: white; text-decoration: none; margin-left: 20px; }
+section { padding: 50px 10%; }
+.hero-content { display: flex; gap: 20px; align-items: center; }
+.placeholder-box { width: 300px; height: 200px; background: #ccc; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card { height: 150px; background: #ddd; border-radius: 8px; }
+button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
