@@ -1,44 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Planner App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personalized Calorie Intake Meal Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap)" rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <div class="logo">MealPlanner</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#nutrition">Nutrition</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="planner.html">Get Started</a></li>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home">Calorie Planner</a>
+      <nav class="top-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
+        <ul id="nav-menu">
+          <li><a href="#generator">Generator</a></li>
+          <li><a href="#nutrition">Nutrition Guide</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="result.html">Second Page</a></li>
+          <li><a href="saved.html">Third Page</a></li>
+          <li><a href="profile.html">Fourth Page</a></li>
         </ul>
-    </nav>
-
-    <section id="home">
-        <h1>Welcome to Your Personalized Meal Planner</h1>
-        <div class="hero-content">
-            <p>Achieve your health goals with a 7-day plan tailored just for you.</p>
-            <div class="placeholder-box"></div>
+      </nav>
+    </div>
+  </header>
+  <main id="home">
+    <!-- Hero / Quick Start -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-title">Your 7‑Day Personalized Meal Plan</h1>
+          <p>Create a healthy plan tailored to your age, activity, preferences, and allergies.</p>
+          <a class="btn btn-primary" href="#generator">Start Building</a>
+          <a class="btn btn-ghost" href="#nutrition">Learn Nutrition</a>
         </div>
-    </section>
-
-    <section id="nutrition">
-        <h2>Nutrition Guide</h2>
-        <div class="grid">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <div class="hero-art" role="img" aria-label="Illustration of balanced meals and activity">
+          <!-- decorative -->
         </div>
+      </div>
     </section>
-
-    <section id="about">
-        <h2>About Us</h2>
-        <p>We believe healthy eating should be simple and accessible for everyone.</p>
+    <!-- Section 1: Generator -->
+    <section id="generator" class="section" aria-labelledby="generator-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="generator-title">Personalized Meal Plan Generator</h2>
+          <p>Enter your details to get a safe, balanced 7‑day plan with daily calories.</p>
+        </div>
+        <form id="planner-form" class="card form-grid">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Alex" />
+          </div>
+          <div class="field">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" min="10" max="100" required />
+          </div>
+          <div class="field">
+            <label for="sex">Sex</label>
+            <select id="sex" name="sex" required>
+              <option value="">Select</option>
+              <option>Female</option>
+              <option>Male</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="height">Height (cm)</label>
+            <input id="height" name="height" type="number" min="120" max="230" required />
+          </div>
+          <div class="field">
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" name="weight" type="number" min="30" max="250" required />
+          </div>
+          <div class="field">
+            <label for="activity">Activity Level</label>
+            <select id="activity" name="activity" required>
+              <option value="">Select</option>
+              <option value="1.2">Sedentary</option>
+              <option value="1.375">Lightly active</option>
+              <option value="1.55">Moderately active</option>
+              <option value="1.725">Very active</option>
+              <option value="1.9">Extra active</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="diet">Dietary Preference</label>
+            <select id="diet" name="diet" required>
+              <option value="">Select</option>
+              <option value="none">No restriction</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="vegan">Vegan</option>
+              <option value="non-vegetarian">Non‑vegetarian</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label>Allergies / Avoid</label>
+            <div class="chips">
+              <label><input type="checkbox" name="allergies" value="peanuts">Peanuts</label>
+              <label><input type="checkbox" name="allergies" value="tree nuts">Tree nuts</label>
+              <label><input type="checkbox" name="allergies" value="dairy">Dairy</label>
+              <label><input type="checkbox" name="allergies" value="eggs">Eggs</label>
+              <label><input type="checkbox" name="allergies" value="soy">Soy</label>
+              <label><input type="checkbox" name="allergies" value="gluten">Gluten</label>
+              <label><input type="checkbox" name="allergies" value="shellfish">Shellfish</label>
+              <label><input type="checkbox" name="allergies" value="fish">Fish</label>
+              <label><input type="checkbox" name="allergies" value="sesame">Sesame</label>
+            </div>
+          </div>
+          <div class="field field--full">
+            <label for="goals">Goals (optional)</label>
+            <select id="goals" name="goals">
+              <option value="maintain">Maintain weight</option>
+              <option value="mild-loss">Mild loss (−10%)</option>
+              <option value="loss">Weight loss (−20%)</option>
+              <option value="mild-gain">Mild gain (+10%)</option>
+              <option value="gain">Weight gain (+20%)</option>
+            </select>
+          </div>
+          <div class="form-actions field--full">
+            <button type="submit" class="btn btn-primary">Generate 7‑Day Plan</button>
+            <button type="button" id="reset-btn" class="btn btn-ghost">Reset</button>
+          </div>
+        </form>
+        <div id="calorie-summary" class="card hidden" aria-live="polite"></div>
+        <div id="plan-output" class="plan-grid hidden" aria-live="polite"></div>
+        <div class="results-actions hidden" id="results-actions">
+          <a class="btn" href="result.html">Open on Second Page</a>
+          <button class="btn btn-secondary" id="save-plan">Save Plan</button>
+          <button class="btn btn-ghost" id="download-plan">Download .json</button>
+        </div>
+      </div>
     </section>
-
-    <script src="script.js"></script>
+    <!-- Section 2: Nutrition Guide -->
+    <section id="nutrition" class="section section-alt" aria-labelledby="nutrition-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="nutrition-title">Balanced Nutrition & Calorie Basics</h2>
+          <p>Understand macros, portions, and how movement fits into health.</p>
+        </div>
+        <div class="guide-grid">
+          <article class="card">
+            <h3>Daily Energy Needs</h3>
+            <p>Your daily calories come from your Basal Metabolic Rate (BMR) times an activity factor. This app uses the Mifflin‑St Jeor equation. For goals, we adjust by ±10–20% thoughtfully.</p>
+            <ul>
+              <li><strong>Protein:</strong> satiety and muscle repair</li>
+              <li><strong>Carbs:</strong> energy for brain and training</li>
+              <li><strong>Fats:</strong> hormones and vitamin absorption</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Plate Method</h3>
+            <p>At main meals, aim for a plate with roughly half non‑starchy veggies, a quarter lean protein, and a quarter whole grains or starchy veg. Add healthy fats and fruit or dairy as fits your diet.</p>
+          </article>
+          <article class="card">
+            <h3>Movement Matters</h3>
+            <p>Regular activity improves insulin sensitivity, sleep, and mood. Mix cardio with two days of strength training for resilience. Hydrate and prioritize sleep for recovery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- Section 3: About / Media / Footer -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="about-title">About This Project</h2>
+          <p>Designed to make healthy eating accessible for students, athletes, busy pros, and anyone with dietary needs.</p>
+        </div>
+        <div class="about-layout card">
+          <div class="about-avatar" aria-hidden="true"></div>
+          <div class="about-copy">
+            <p>This tool generates practical, allergy‑aware weekly plans. It’s not a substitute for personalized medical advice. For complex conditions, consult a registered dietitian or your clinician.</p>
+            <div class="about-icons" aria-label="Social links">
+              <a href="#" aria-label="Project video">▶ Demo</a>
+              <a href="#" aria-label="GitHub repo">💻 GitHub</a>
+              <a href="#" aria-label="Contact">✉ Contact</a>
+            </div>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p><strong>Calorie Planner</strong> — build better long‑term eating habits.</p>
+          <nav aria-label="Footer">
+            <a href="#home">Home</a>
+            <a href="#generator">Generator</a>
+            <a href="#nutrition">Nutrition</a>
+            <a href="#about">About</a>
+          </nav>
+        </footer>
+      </div>
+    </section>
+  </main>
+  <script src="script.js" defer></script>
 </body>
 </html>

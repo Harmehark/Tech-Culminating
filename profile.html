@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile & Settings • Calorie Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap)" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html#home">Calorie Planner</a>
+      <nav class="top-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
+        <ul id="nav-menu">
+          <li><a href="index.html#generator">Generator</a></li>
+          <li><a href="index.html#nutrition">Nutrition Guide</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="result.html">Second Page</a></li>
+          <li><a href="saved.html">Third Page</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1>Profile & Defaults</h1>
+      <p class="muted">Save your default inputs so you can generate plans faster.</p>
+
+      <form id="profile-form" class="card form-grid">
+        <div class="field">
+          <label for="p-name">Name</label>
+          <input id="p-name" type="text" />
+        </div>
+        <div class="field">
+          <label for="p-age">Age</label>
+          <input id="p-age" type="number" min="10" max="100" />
+        </div>
+        <div class="field">
+          <label for="p-sex">Sex</label>
+          <select id="p-sex">
+            <option>Female</option>
+            <option>Male</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="p-height">Height (cm)</label>
+          <input id="p-height" type="number" min="120" max="230" />
+        </div>
+        <div class="field">
+          <label for="p-weight">Weight (kg)</label>
+          <input id="p-weight" type="number" min="30" max="250" />
+        </div>
+        <div class="field">
+          <label for="p-activity">Activity</label>
+          <select id="p-activity">
+            <option value="1.2">Sedentary</option>
+            <option value="1.375">Lightly active</option>
+            <option value="1.55">Moderately active</option>
+            <option value="1.725">Very active</option>
+            <option value="1.9">Extra active</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="p-diet">Diet</label>
+          <select id="p-diet">
+            <option value="none">No restriction</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="non-vegetarian">Non‑vegetarian</option>
+          </select>
+        </div>
+        <div class="field field--full">
+          <label>Allergies</label>
+          <div class="chips" id="p-allergies">
+            <label><input type="checkbox" value="peanuts">Peanuts</label>
+            <label><input type="checkbox" value="tree nuts">Tree nuts</label>
+            <label><input type="checkbox" value="dairy">Dairy</label>
+            <label><input type="checkbox" value="eggs">Eggs</label>
+            <label><input type="checkbox" value="soy">Soy</label>
+            <label><input type="checkbox" value="gluten">Gluten</label>
+            <label><input type="checkbox" value="shellfish">Shellfish</label>
+            <label><input type="checkbox" value="fish">Fish</label>
+            <label><input type="checkbox" value="sesame">Sesame</label>
+          </div>
+        </div>
+        <div class="form-actions field--full">
+          <button class="btn btn-primary" id="save-profile" type="button">Save Defaults</button>
+          <button class="btn btn-ghost" id="clear-profile" type="button">Clear</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

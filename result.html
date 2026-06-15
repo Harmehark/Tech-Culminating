@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your 7‑Day Plan • Calorie Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap)" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html#home">Calorie Planner</a>
+      <nav class="top-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
+        <ul id="nav-menu">
+          <li><a href="index.html#generator">Generator</a></li>
+          <li><a href="index.html#nutrition">Nutrition Guide</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="saved.html">Third Page</a></li>
+          <li><a href="profile.html">Fourth Page</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <h1>Your 7‑Day Plan</h1>
+      <p class="muted">This page shows the most recently generated plan. You can also save multiple plans.</p>
+      <div id="results-calorie-summary" class="card hidden"></div>
+      <div id="results-plan-output" class="plan-grid hidden"></div>
+      <div class="results-actions hidden" id="results-buttons">
+        <button class="btn btn-secondary" id="save-plan-2">Save Plan</button>
+        <button class="btn btn-ghost" id="download-plan-2">Download .json</button>
+      </div>
+    </div>
+  </main>
+  <script src="script.js" defer></script>
+</body>
+</html>

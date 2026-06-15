@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saved Plans • Calorie Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap)" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html#home">Calorie Planner</a>
+      <nav class="top-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
+        <ul id="nav-menu">
+          <li><a href="index.html#generator">Generator</a></li>
+          <li><a href="index.html#nutrition">Nutrition Guide</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="result.html">Second Page</a></li>
+          <li><a href="profile.html">Fourth Page</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1>Saved Meal Plans</h1>
+      <p class="muted">Plans are stored in your browser. You can export or delete them anytime.</p>
+
+      <div id="saved-list" class="card">
+        <ul id="plans-ul" class="saved-ul"></ul>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
