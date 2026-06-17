@@ -12,29 +12,32 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html#home">
+      <a class="brand" href="index.html">
         <span class="brand-icon">🥗</span>
         Personalized Calorie Intake Meal Planner
       </a>
       <nav class="top-nav" aria-label="Primary">
         <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
         <ul id="nav-menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#nutrition">Nutrition Guide</a></li>
-          <li><a href="index.html#about">About</a></li>
-          <li><a href="saved.html">Saved Plans</a></li>
-          <li><a href="profile.html">Profile</a></li>
+          <li><a href="index.html">🏠 Home</a></li>
+          <li><a href="result.html">📋 My Plan</a></li>
+          <li><a href="saved.html">💾 Saved Plans</a></li>
+          <li><a href="alternatives.html">🔄 Alternatives</a></li>
+          <li><a href="profile.html">👤 Profile</a></li>
         </ul>
+        <div class="nav-auth">
+          <button class="btn btn-ghost btn-sm" id="nav-login-btn">🔑 Log In</button>
+          <button class="btn btn-primary btn-sm" id="nav-signup-btn">✨ Sign Up</button>
+          <button class="btn btn-ghost btn-sm" id="nav-logout-btn" style="display:none">🚪 Log Out</button>
+          <button class="btn btn-secondary btn-sm" id="nav-profile-btn" style="display:none">👤 Profile</button>
+        </div>
       </nav>
     </div>
   </header>
 
   <div class="page-hero">
     <div class="container">
-      <a href="index.html" class="btn btn-ghost btn-sm"
-         style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3);margin-bottom:12px">
-        ← Back to Home
-      </a>
+      <a href="index.html" class="btn btn-ghost btn-sm back-btn">← Back to Home</a>
       <h1>Create Your Meal Plan</h1>
       <p>Fill in your information below and we will generate a personalized 7-day meal plan just for you!</p>
     </div>
@@ -50,26 +53,26 @@
         </div>
 
         <div class="field">
-          <label for="age">Age <span style="color:var(--danger)">*</span></label>
+          <label for="age">Age <span class="req">*</span></label>
           <input id="age" name="age" type="number" min="10" max="100" placeholder="Enter your age" required />
         </div>
 
         <div class="field">
-          <label for="sex">Sex <span style="color:var(--danger)">*</span></label>
+          <label for="sex">Sex <span class="req">*</span></label>
           <select id="sex" name="sex" required>
             <option value="">Select sex</option>
-            <option>Female</option>
-            <option>Male</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="height">Height (cm) <span style="color:var(--danger)">*</span></label>
+          <label for="height">Height (cm) <span class="req">*</span></label>
           <input id="height" name="height" type="number" min="120" max="230" placeholder="e.g. 170" required />
         </div>
 
         <div class="field">
-          <label for="weight">Weight (kg) <span style="color:var(--danger)">*</span></label>
+          <label for="weight">Weight (kg) <span class="req">*</span></label>
           <input id="weight" name="weight" type="number" min="30" max="250" placeholder="e.g. 65" required />
         </div>
 
@@ -85,7 +88,7 @@
         </div>
 
         <div class="field field--full">
-          <label for="activity">Activity Level <span style="color:var(--danger)">*</span></label>
+          <label for="activity">Activity Level <span class="req">*</span></label>
           <select id="activity" name="activity" required>
             <option value="">Select your activity level</option>
             <option value="1.2">Sedentary — little or no exercise</option>
@@ -103,7 +106,7 @@
         </div>
 
         <div class="field field--full">
-          <label for="diet">Dietary Preference <span style="color:var(--danger)">*</span></label>
+          <label for="diet">Dietary Preference <span class="req">*</span></label>
           <select id="diet" name="diet" required>
             <option value="">Select your preference</option>
             <option value="none">No restriction</option>
@@ -143,7 +146,7 @@
       <nav>
         <a href="index.html">Home</a>
         <a href="index.html#nutrition">Nutrition</a>
-        <a href="index.html#about">About</a>
+        <a href="saved.html">Saved Plans</a>
       </nav>
     </div>
   </footer>

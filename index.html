@@ -11,7 +11,7 @@
 <body>
 
   <!-- ── Header ── -->
-  <header class="site-header">
+    <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#home">
         <span class="brand-icon">🥗</span>
@@ -22,11 +22,21 @@
         <ul id="nav-menu">
           <li><a href="#home" class="active">Home</a></li>
           <li><a href="#nutrition">Nutrition Guide</a></li>
+          <li><a href="#article">Health Article</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="#about">About</a></li>
         </ul>
+        <div class="nav-auth">
+          <button class="btn btn-ghost btn-sm" id="nav-login-btn">🔑 Log In</button>
+          <button class="btn btn-primary btn-sm" id="nav-signup-btn">✨ Sign Up</button>
+          <button class="btn btn-ghost btn-sm" id="nav-logout-btn" style="display:none">🚪 Log Out</button>
+          <button class="btn btn-secondary btn-sm" id="nav-profile-btn" style="display:none">👤 Profile</button>
+        </div>
       </nav>
     </div>
   </header>
+
+
 
   <main id="home">
 
@@ -38,122 +48,25 @@
           <p>Create personalized meal plans based on your age, activity level, dietary preferences, and allergies.</p>
           <div class="hero-btns">
             <a class="btn btn-primary btn-lg" href="form.html">🍽️ Create Meal Plan</a>
-            <a class="btn btn-ghost btn-lg" href="#nutrition" style="color:#fff;border-color:rgba(255,255,255,0.4)">Learn More</a>
           </div>
         </div>
-        <div class="hero-art" role="img" aria-label="Healthy meal illustration">🥦</div>
-      </div>
-    </section>
 
-    <!-- ── Generator ── -->
-    <section id="generator" class="section" aria-labelledby="generator-title">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="generator-title">🍽️ Personalized Meal Plan Generator</h2>
-          <p>Enter your details below and we'll generate a personalized 7-day meal plan just for you!</p>
-        </div>
-
-        <form id="planner-form" class="card form-grid">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Enter your name" />
-          </div>
-          <div class="field">
-            <label for="age">Age <span style="color:var(--danger)">*</span></label>
-            <input id="age" name="age" type="number" min="10" max="100" placeholder="Enter your age" required />
-          </div>
-          <div class="field">
-            <label for="sex">Sex <span style="color:var(--danger)">*</span></label>
-            <select id="sex" name="sex" required>
-              <option value="">Select sex</option>
-              <option>Female</option>
-              <option>Male</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="height">Height (cm) <span style="color:var(--danger)">*</span></label>
-            <input id="height" name="height" type="number" min="120" max="230" placeholder="e.g. 170" required />
-          </div>
-          <div class="field">
-            <label for="weight">Weight (kg) <span style="color:var(--danger)">*</span></label>
-            <input id="weight" name="weight" type="number" min="30" max="250" placeholder="e.g. 65" required />
-          </div>
-          <div class="field">
-            <label for="goals">Goal</label>
-            <select id="goals" name="goals">
-              <option value="maintain">Maintain weight</option>
-              <option value="mild-loss">Mild loss (−10%)</option>
-              <option value="loss">Weight loss (−20%)</option>
-              <option value="mild-gain">Mild gain (+10%)</option>
-              <option value="gain">Weight gain (+20%)</option>
-            </select>
-          </div>
-          <div class="field field--full">
-            <label for="activity">Activity Level <span style="color:var(--danger)">*</span></label>
-            <select id="activity" name="activity" required>
-              <option value="">Select your activity level</option>
-              <option value="1.2">Sedentary — little or no exercise</option>
-              <option value="1.375">Lightly active — 1–3 days/week</option>
-              <option value="1.55">Moderately active — 3–5 days/week</option>
-              <option value="1.725">Very active — 6–7 days/week</option>
-              <option value="1.9">Extra active — intense exercise daily</option>
-            </select>
-            <div class="activity-hint">
-              💡 <strong>Not sure?</strong> &nbsp;
-              <strong>Low:</strong> little or no exercise &nbsp;•&nbsp;
-              <strong>Moderate:</strong> 3–5 days/week &nbsp;•&nbsp;
-              <strong>High:</strong> 6–7 days/week or intense exercise
+        <!-- Real photos -->
+        <div class="hero-photos" role="img" aria-label="Healthy meal and checklist photos">
+          <div class="hero-photo-stack">
+            <div class="hero-photo">
+              <img
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80"
+                alt="Healthy colorful meal bowl" />
+              <div class="hero-photo-label">🥗 Healthy Meals</div>
+            </div>
+            <div class="hero-photo">
+              <img
+                src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80"
+                alt="Meal plan checklist" />
+              <div class="hero-photo-label">✅ Your Plan</div>
             </div>
           </div>
-          <div class="field field--full">
-            <label for="diet">Dietary Preference <span style="color:var(--danger)">*</span></label>
-            <select id="diet" name="diet" required>
-              <option value="">Select your preference</option>
-              <option value="none">No restriction</option>
-              <option value="vegetarian">Vegetarian</option>
-              <option value="vegan">Vegan</option>
-              <option value="non-vegetarian">Non-vegetarian</option>
-            </select>
-          </div>
-          <div class="field field--full">
-            <label>Allergies / Foods to Avoid</label>
-            <div class="chips">
-              <label><input type="checkbox" name="allergies" value="peanuts"> 🥜 Peanuts</label>
-              <label><input type="checkbox" name="allergies" value="tree nuts"> 🌰 Tree nuts</label>
-              <label><input type="checkbox" name="allergies" value="dairy"> 🥛 Dairy</label>
-              <label><input type="checkbox" name="allergies" value="eggs"> 🥚 Eggs</label>
-              <label><input type="checkbox" name="allergies" value="soy"> 🫘 Soy</label>
-              <label><input type="checkbox" name="allergies" value="gluten"> 🌾 Gluten</label>
-              <label><input type="checkbox" name="allergies" value="shellfish"> 🦐 Shellfish</label>
-              <label><input type="checkbox" name="allergies" value="fish"> 🐟 Fish</label>
-              <label><input type="checkbox" name="allergies" value="sesame"> 🌿 Sesame</label>
-            </div>
-          </div>
-          <div class="form-actions field--full">
-            <button type="submit" class="btn btn-primary btn-lg">🍽️ Generate 7-Day Plan</button>
-            <button type="button" id="reset-btn" class="btn btn-ghost">↺ Reset</button>
-          </div>
-        </form>
-
-        <!-- Results -->
-        <div id="calorie-summary" class="hidden" aria-live="polite"></div>
-        <div id="plan-tabs-wrapper" class="hidden">
-          <div class="day-tabs-wrapper">
-            <div class="day-tabs" id="day-tabs" role="tablist"></div>
-          </div>
-          <div id="day-panels"></div>
-          <div class="tip-box">
-            <span class="tip-icon">⭐</span>
-            <span><strong>Tip:</strong> Drink plenty of water and stay active every day!</span>
-          </div>
-        </div>
-        <div id="plan-output" class="plan-grid hidden" aria-live="polite"></div>
-
-        <div class="results-actions hidden" id="results-actions">
-          <a class="btn btn-secondary" href="result.html">📋 View Full Plan Page</a>
-          <button class="btn btn-primary" id="save-plan">💾 Save Plan</button>
-          <button class="btn btn-ghost" id="download-plan">⬇ Download .json</button>
-          <a class="btn btn-ghost" href="alternatives.html" id="view-alternatives-btn">🔄 View Alternatives</a>
         </div>
       </div>
     </section>
@@ -161,43 +74,340 @@
     <!-- ── Nutrition Guide ── -->
     <section id="nutrition" class="section section-alt" aria-labelledby="nutrition-title">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head text-center">
           <h2 id="nutrition-title">📚 Nutrition Guide</h2>
           <p>Why is healthy eating important?</p>
         </div>
 
+        <!-- 5 icon boxes — horizontal, responsive -->
         <div class="nutrition-icons">
           <div class="nutrition-icon-item">
-            <div class="icon">🥗</div>
-            <div class="label">Balanced Nutrition</div>
-            <div class="desc">Provides essential nutrients your body needs every day</div>
+            <div class="nut-icon">🥗</div>
+            <div class="nut-label">Balanced Nutrition</div>
+            <div class="nut-desc">Provides essential nutrients your body needs every day</div>
           </div>
           <div class="nutrition-icon-item">
-            <div class="icon">⚖️</div>
-            <div class="label">Manage Calories</div>
-            <div class="desc">Helps maintain a healthy weight and prevents disease</div>
+            <div class="nut-icon">⚖️</div>
+            <div class="nut-label">Manage Calories</div>
+            <div class="nut-desc">Helps maintain a healthy weight and prevents disease</div>
           </div>
           <div class="nutrition-icon-item">
-            <div class="icon">🏃</div>
-            <div class="label">Exercise Benefits</div>
-            <div class="desc">Improves physical fitness, mood, and overall well-being</div>
+            <div class="nut-icon">🏃</div>
+            <div class="nut-label">Exercise Benefits</div>
+            <div class="nut-desc">Improves physical fitness, mood, and overall well-being</div>
           </div>
           <div class="nutrition-icon-item">
-            <div class="icon">💪</div>
-            <div class="label">Healthy Habits</div>
-            <div class="desc">Builds long-term habits for a healthier lifestyle</div>
+            <div class="nut-icon">💪</div>
+            <div class="nut-label">Healthy Habits</div>
+            <div class="nut-desc">Builds long-term habits for a healthier lifestyle</div>
           </div>
           <div class="nutrition-icon-item">
-            <div class="icon">🍎</div>
-            <div class="label">Food Groups</div>
-            <div class="desc">Eating a variety of foods keeps your body strong</div>
+            <div class="nut-icon">🍎</div>
+            <div class="nut-label">Food Groups</div>
+            <div class="nut-desc">Eating a variety of foods keeps your body strong</div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="guide-grid mt-8">
-          <article class="card guide-card">
-            <h3>⚡ Daily Energy Needs</h3>
-            <p>Your daily calories come from your Basal Metabolic Rate (BMR) times an activity factor. This app uses the Mifflin-St Jeor equation.</p>
-            <ul>
-              <li><strong>Protein:</strong> satiety and muscle repair</li>
-              <li><strong>Carbs:</strong> energy for brain and training
+    <!-- ── Health Article ── -->
+    <section id="article" class="section" aria-labelledby="article-title">
+      <div class="container">
+        <div class="article-wrap">
+
+          <div class="article-meta">
+            <span class="article-tag">🌿 Health & Nutrition</span>
+            <span class="article-date">June 2025</span>
+          </div>
+
+          <h2 id="article-title" class="article-title">
+            The Science of Eating Well: How a Personalized Meal Plan Can Transform Your Health
+          </h2>
+
+          <p class="article-lead">
+            Eating well is not about strict diets or depriving yourself of the foods you love.
+            It is about feeling great, having more energy, improving your health, and boosting
+            your mood. Research consistently shows that a personalized approach to nutrition —
+            one that accounts for your age, body composition, activity level, and food
+            sensitivities — produces far better long-term outcomes than any one-size-fits-all diet.
+          </p>
+
+          <h3 class="article-h3">Understanding Your Caloric Needs</h3>
+          <p>
+            Every person has a unique Basal Metabolic Rate (BMR) — the number of calories your
+            body needs just to maintain basic functions like breathing and circulation while at
+            rest. When you factor in your daily activity level, you get your Total Daily Energy
+            Expenditure (TDEE). Eating close to your TDEE helps you maintain your current weight,
+            while eating slightly below supports gradual, sustainable fat loss, and eating above
+            supports muscle gain.
+          </p>
+          <p>
+            The Mifflin-St Jeor equation, used by this planner, is widely regarded as the most
+            accurate formula for estimating BMR. It takes into account your sex, weight, height,
+            and age — four variables that together paint a much clearer picture of your energy
+            needs than generic calorie charts ever could.
+          </p>
+
+          <!-- Article image 1 -->
+          <div class="article-img-block">
+            <img
+              src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80"
+              alt="Nutritious meal prep with vegetables and grains"
+            />
+            <p class="article-img-caption">
+              Meal prepping with whole foods makes it easier to stay on track with your calorie and nutrition goals.
+            </p>
+          </div>
+
+          <h3 class="article-h3">The Role of Macronutrients</h3>
+          <p>
+            A well-balanced meal plan is built around three macronutrients: proteins, carbohydrates,
+            and fats. Each plays a distinct and irreplaceable role in your body.
+          </p>
+          <p>
+            <strong>Protein</strong> is the building block of muscle tissue. It also promotes
+            satiety — keeping you fuller for longer — and supports immune function. Good sources
+            include lean meats, fish, eggs, legumes, tofu, and dairy products.
+          </p>
+          <p>
+            <strong>Carbohydrates</strong> are your body's preferred energy source, especially
+            for the brain and during physical activity. Choosing complex carbohydrates — such as
+            oats, brown rice, sweet potatoes, and whole grain bread — over refined sugars ensures
+            a steady release of energy without sharp blood sugar spikes.
+          </p>
+          <p>
+            <strong>Healthy fats</strong> from sources like avocado, olive oil, nuts, and fatty
+            fish support hormone production, vitamin absorption, and cardiovascular health. Despite
+            their caloric density, they are an essential part of any balanced diet.
+          </p>
+
+          <h3 class="article-h3">Why Allergies and Dietary Preferences Matter</h3>
+          <p>
+            Food allergies and intolerances affect millions of people worldwide. Eating a food
+            you are allergic or sensitive to can cause anything from mild discomfort to severe
+            reactions. Beyond medical allergies, many people choose to follow specific dietary
+            patterns — vegetarian, vegan, or non-vegetarian — for ethical, environmental, or
+            personal health reasons.
+          </p>
+          <p>
+            A truly personalized meal plan respects these boundaries without sacrificing
+            nutritional completeness. For example, someone avoiding dairy can still meet their
+            calcium needs through fortified plant milks, tofu, broccoli, and kale. Someone
+            avoiding gluten can still enjoy a carbohydrate-rich diet through rice, quinoa,
+            potatoes, and certified gluten-free oats.
+          </p>
+
+          <!-- Article image 2 -->
+          <div class="article-img-block">
+            <img
+              src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=900&q=80"
+              alt="Fresh fruits and vegetables on a table"
+            />
+            <p class="article-img-caption">
+              A colourful variety of fruits and vegetables ensures a wide range of vitamins, minerals, and antioxidants.
+            </p>
+          </div>
+
+          <h3 class="article-h3">The 7-Day Meal Plan Advantage</h3>
+          <p>
+            Planning your meals a week in advance is one of the most effective strategies for
+            maintaining a healthy diet. It removes the daily decision fatigue of figuring out
+            what to eat, reduces the temptation to reach for convenient but unhealthy options,
+            and makes grocery shopping more efficient and cost-effective.
+          </p>
+          <p>
+            Studies published in the <em>International Journal of Behavioral Nutrition and
+            Physical Activity</em> found that people who plan their meals in advance have
+            significantly higher diet quality scores, greater dietary variety, and lower rates
+            of obesity compared to those who do not plan ahead.
+          </p>
+
+          <h3 class="article-h3">Small Changes, Big Results</h3>
+          <p>
+            You do not need to overhaul your entire lifestyle overnight. Start by swapping one
+            processed snack per day for a piece of fruit or a handful of nuts. Drink an extra
+            glass of water before each meal. Add one additional serving of vegetables to your
+            dinner plate. These small, consistent changes compound over time into meaningful
+            improvements in energy, body composition, and overall wellbeing.
+          </p>
+          <p>
+            Remember: the best diet is the one you can actually stick to. Personalization is
+            the key to sustainability — and sustainability is the key to lasting health.
+          </p>
+
+          <div class="article-disclaimer">
+            ⚠️ <strong>Disclaimer:</strong> This article is for informational purposes only and
+            does not constitute medical advice. Always consult a registered dietitian or
+            healthcare professional before making significant changes to your diet.
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section id="faq" class="section section-alt" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head text-center">
+          <h2 id="faq-title">❓ Frequently Asked Questions</h2>
+          <p>Everything you need to know about using this meal planner.</p>
+        </div>
+
+        <div class="faq-grid">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              How does the meal plan generator work?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>You enter your personal details — age, sex, height, weight, activity level, dietary preference, and any allergies. The app uses the Mifflin-St Jeor equation to calculate your recommended daily calories, then selects appropriate meals from a curated database filtered to match your diet and avoid your allergens.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Is this a substitute for professional dietary advice?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>No. This tool is designed for general wellness and educational purposes. It is not a substitute for personalized medical or dietary advice. If you have a medical condition, eating disorder, or complex nutritional needs, please consult a registered dietitian or your healthcare provider.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              What dietary preferences are supported?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>The planner currently supports four dietary preferences: <strong>No restriction</strong>, <strong>Vegetarian</strong> (no meat or fish), <strong>Vegan</strong> (no animal products at all), and <strong>Non-vegetarian</strong> (includes all food types). Meals are filtered automatically based on your selection.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Which allergies can I filter out?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>You can select from the nine most common allergens: Peanuts, Tree nuts, Dairy, Eggs, Soy, Gluten, Shellfish, Fish, and Sesame. The planner will automatically exclude any meals containing those ingredients and suggest safe alternatives on the Alternatives page.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              How are my recommended calories calculated?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your BMR (Basal Metabolic Rate) is calculated using the Mifflin-St Jeor equation, which factors in your sex, age, height, and weight. This is then multiplied by your activity factor to get your TDEE (Total Daily Energy Expenditure). Your goal adjustment (e.g. weight loss or gain) is then applied as a percentage modifier.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Can I save or download my meal plan?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! After generating your plan, you can save it to your browser's local storage to view later on the Saved Plans page, or download it as a <code>.json</code> file to keep a permanent copy. Saved plans persist in your browser until you clear them or delete them manually.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              What age groups does the planner support?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>The planner supports five age groups: <strong>Preteens (9–13)</strong>, <strong>Teens (14–18)</strong>, <strong>Young Adults (19–30)</strong>, <strong>Middle-Aged Adults (31–50)</strong>, and <strong>Older Adults (51+)</strong>. Each group has its own curated meal database and calorie targets tailored to typical nutritional needs for that life stage.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              What is the Alternatives page for?
+              <span class="faq-icon">＋</span>
+            </button>
+            <div class="faq-answer">
+              <p>The Alternatives page shows you safe food substitutions for each allergen you selected. For example, if you are allergic to dairy, it will show you which nutrients you might miss and suggest alternatives like fortified almond milk, tofu, broccoli, and kale that provide the same nutrients without the allergen.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About (professional footer-style) ── -->
+    <section id="about" class="about-section" aria-labelledby="about-title">
+
+      <!-- Top about content -->
+      <div class="about-top">
+        <div class="container about-top-inner">
+
+          <div class="about-col about-col--brand">
+            <div class="about-brand-icon">🥗</div>
+            <div class="about-brand-name">Personalized Calorie<br>Intake Meal Planner</div>
+            <p class="about-brand-tagline">Empowering healthy choices,<br>one meal at a time.</p>
+          </div>
+
+          <div class="about-col">
+            <h4 class="about-col-title">Project Info</h4>
+            <ul class="about-col-list">
+              <li><span class="about-col-key">Creator:</span> Your Name</li>
+              <li><span class="about-col-key">Grade:</span> Your Grade</li>
+              <li><span class="about-col-key">Course:</span> Computer Technology</li>
+              <li><span class="about-col-key">Year:</span> 2025</li>
+            </ul>
+          </div>
+
+          <div class="about-col">
+            <h4 class="about-col-title">Navigate</h4>
+            <ul class="about-col-list">
+              <li><a href="#home">Home</a></li>
+              <li><a href="form.html">Create Meal Plan</a></li>
+              <li><a href="#nutrition">Nutrition Guide</a></li>
+              <li><a href="#article">Health Article</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="saved.html">Saved Plans</a></li>
+              <li><a href="profile.html">Profile</a></li>
+            </ul>
+          </div>
+
+          <div class="about-col">
+            <h4 class="about-col-title">Purpose</h4>
+            <p class="about-col-text">
+              This tool helps users create healthy, personalized 7-day meal plans tailored to
+              their body, lifestyle, and dietary needs. It is not a substitute for professional
+              medical advice.
+            </p>
+            <div class="about-links">
+              <a href="#" class="about-link-btn">▶ Demo</a>
+              <a href="#" class="about-link-btn">💻 GitHub</a>
+              <a href="#" class="about-link-btn">✉ Contact</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom copyright bar -->
+      <div class="about-bottom">
+        <div class="container about-bottom-inner">
+          <p>© 2025 Personalized Calorie Intake Meal Planner. All rights reserved.</p>
+          <nav aria-label="Footer legal">
+            <a href="#home">Home</a>
+            <a href="#faq">FAQ</a>
+            <a href="#about">About</a>
+          </nav>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
