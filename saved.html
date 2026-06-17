@@ -5,35 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Saved Plans • Calorie Planner</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap)" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html#home">Calorie Planner</a>
+      <a class="brand" href="index.html#home">
+        <span class="brand-icon">🥗</span>
+        Personalized Calorie Intake Meal Planner
+      </a>
       <nav class="top-nav" aria-label="Primary">
         <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">☰</button>
         <ul id="nav-menu">
-          <li><a href="index.html#generator">Generator</a></li>
+          <li><a href="index.html#home">Home</a></li>
           <li><a href="index.html#nutrition">Nutrition Guide</a></li>
           <li><a href="index.html#about">About</a></li>
-          <li><a href="result.html">Second Page</a></li>
-          <li><a href="profile.html">Fourth Page</a></li>
+          <li><a href="result.html">My Plan</a></li>
+          <li><a href="profile.html">Profile</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
+  <div class="page-hero">
+    <div class="container">
+      <h1>💾 Saved Meal Plans</h1>
+      <p>Plans are stored in your browser. Export or delete them anytime.</p>
+    </div>
+  </div>
+
   <main class="section">
     <div class="container">
-      <h1>Saved Meal Plans</h1>
-      <p class="muted">Plans are stored in your browser. You can export or delete them anytime.</p>
-
       <div id="saved-list" class="card">
         <ul id="plans-ul" class="saved-ul"></ul>
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 Personalized Calorie Intake Meal Planner</p>
+      <nav>
+        <a href="index.html#home">Home</a>
+        <a href="result.html">My Plan</a>
+        <a href="profile.html">Profile</a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="script.js" defer></script>
 </body>
