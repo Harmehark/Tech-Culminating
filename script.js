@@ -44,26 +44,41 @@
   // ── Update nav auth buttons ──
   function updateAuthNav() {
     const user = getCurrentUser();
-    const signupBtn  = $('#nav-signup-btn');
-    const loginBtn   = $('#nav-login-btn');
-    const logoutBtn  = $('#nav-logout-btn');
-    const profileBtn = $('#nav-profile-btn');
+    // Handle each li wrapper visibility
+    const liLogin   = document.getElementById('li-login-btn');
+    const liSignup  = document.getElementById('li-signup-btn');
+    const liLogout  = document.getElementById('li-logout-btn');
+    const liProfile = document.getElementById('li-profile-btn');
+    const profileBtn = document.getElementById('nav-profile-btn');
 
     if (user) {
-      signupBtn  && (signupBtn.style.display  = 'none');
-      loginBtn   && (loginBtn.style.display   = 'none');
-      logoutBtn  && (logoutBtn.style.display  = 'inline-flex');
-      if (profileBtn) {
-        profileBtn.style.display = 'inline-flex';
-        profileBtn.textContent   = '👤 ' + (user.name || 'Profile');
-      }
+      if (liLogin)   liLogin.style.display   = 'none';
+      if (liSignup)  liSignup.style.display  = 'none';
+      if (liLogout)  liLogout.style.display  = 'list-item';
+      if (liProfile) liProfile.style.display = 'list-item';
+      if (profileBtn) profileBtn.textContent = '👤 ' + (user.name || 'Profile');
     } else {
-      signupBtn  && (signupBtn.style.display  = 'inline-flex');
-      loginBtn   && (loginBtn.style.display   = 'inline-flex');
-      logoutBtn  && (logoutBtn.style.display  = 'none');
-      profileBtn && (profileBtn.style.display = 'none');
+      if (liLogin)   liLogin.style.display   = 'list-item';
+      if (liSignup)  liSignup.style.display  = 'list-item';
+      if (liLogout)  liLogout.style.display  = 'none';
+      if (liProfile) liProfile.style.display = 'none';
     }
   }
+
+  function openModal(screen) {
+    screen = screen || 'auth-choice';
+    buildAuthModal();
+    showModalScreen(screen);
+    document.getElementById('auth-modal').classList.add('open');
+    // DO NOT set body overflow — this was breaking scroll
+  }
+
+  function closeModal() {
+    const m = document.getElementById('auth-modal');
+    if (m) m.classList.remove('open');
+    // DO NOT touch body overflow
+  }
+
 
   // ── Mobile nav ──
   const navToggle = $('.nav-toggle');

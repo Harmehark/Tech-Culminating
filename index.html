@@ -10,8 +10,7 @@
 </head>
 <body>
 
-  <!-- ── Header ── -->
-    <header class="site-header">
+  <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#home">
         <span class="brand-icon">🥗</span>
@@ -25,22 +24,17 @@
           <li><a href="#article">Health Article</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#about">About</a></li>
+          <li class="nav-auth-item" id="li-login-btn"><a href="#" class="nav-auth-link" id="nav-login-btn">🔑 Log In</a></li>
+          <li class="nav-auth-item" id="li-signup-btn"><a href="#" class="nav-auth-link nav-auth-link--primary" id="nav-signup-btn">✨ Sign Up</a></li>
+          <li class="nav-auth-item" id="li-logout-btn" style="display:none"><a href="#" class="nav-auth-link" id="nav-logout-btn">🚪 Log Out</a></li>
+          <li class="nav-auth-item" id="li-profile-btn" style="display:none"><a href="#" class="nav-auth-link nav-auth-link--profile" id="nav-profile-btn">👤 Profile</a></li>
         </ul>
-        <div class="nav-auth">
-          <button class="btn btn-ghost btn-sm" id="nav-login-btn">🔑 Log In</button>
-          <button class="btn btn-primary btn-sm" id="nav-signup-btn">✨ Sign Up</button>
-          <button class="btn btn-ghost btn-sm" id="nav-logout-btn" style="display:none">🚪 Log Out</button>
-          <button class="btn btn-secondary btn-sm" id="nav-profile-btn" style="display:none">👤 Profile</button>
-        </div>
       </nav>
     </div>
   </header>
 
-
-
   <main id="home">
 
-    <!-- ── Hero ── -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-inner">
         <div class="hero-copy">
@@ -50,20 +44,14 @@
             <a class="btn btn-primary btn-lg" href="form.html">🍽️ Create Meal Plan</a>
           </div>
         </div>
-
-        <!-- Real photos -->
         <div class="hero-photos" role="img" aria-label="Healthy meal and checklist photos">
           <div class="hero-photo-stack">
             <div class="hero-photo">
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80"
-                alt="Healthy colorful meal bowl" />
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" alt="Healthy colorful meal bowl" />
               <div class="hero-photo-label">🥗 Healthy Meals</div>
             </div>
             <div class="hero-photo">
-              <img
-                src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80"
-                alt="Meal plan checklist" />
+              <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=80" alt="Meal plan checklist" />
               <div class="hero-photo-label">✅ Your Plan</div>
             </div>
           </div>
@@ -71,15 +59,12 @@
       </div>
     </section>
 
-    <!-- ── Nutrition Guide ── -->
     <section id="nutrition" class="section section-alt" aria-labelledby="nutrition-title">
       <div class="container">
         <div class="section-head text-center">
           <h2 id="nutrition-title">📚 Nutrition Guide</h2>
           <p>Why is healthy eating important?</p>
         </div>
-
-        <!-- 5 icon boxes — horizontal, responsive -->
         <div class="nutrition-icons">
           <div class="nutrition-icon-item">
             <div class="nut-icon">🥗</div>
@@ -110,20 +95,16 @@
       </div>
     </section>
 
-    <!-- ── Health Article ── -->
     <section id="article" class="section" aria-labelledby="article-title">
       <div class="container">
         <div class="article-wrap">
-
           <div class="article-meta">
             <span class="article-tag">🌿 Health & Nutrition</span>
             <span class="article-date">June 2025</span>
           </div>
-
           <h2 id="article-title" class="article-title">
             The Science of Eating Well: How a Personalized Meal Plan Can Transform Your Health
           </h2>
-
           <p class="article-lead">
             Eating well is not about strict diets or depriving yourself of the foods you love.
             It is about feeling great, having more energy, improving your health, and boosting
@@ -131,128 +112,44 @@
             one that accounts for your age, body composition, activity level, and food
             sensitivities — produces far better long-term outcomes than any one-size-fits-all diet.
           </p>
-
           <h3 class="article-h3">Understanding Your Caloric Needs</h3>
-          <p>
-            Every person has a unique Basal Metabolic Rate (BMR) — the number of calories your
-            body needs just to maintain basic functions like breathing and circulation while at
-            rest. When you factor in your daily activity level, you get your Total Daily Energy
-            Expenditure (TDEE). Eating close to your TDEE helps you maintain your current weight,
-            while eating slightly below supports gradual, sustainable fat loss, and eating above
-            supports muscle gain.
-          </p>
-          <p>
-            The Mifflin-St Jeor equation, used by this planner, is widely regarded as the most
-            accurate formula for estimating BMR. It takes into account your sex, weight, height,
-            and age — four variables that together paint a much clearer picture of your energy
-            needs than generic calorie charts ever could.
-          </p>
-
-          <!-- Article image 1 -->
+          <p>Every person has a unique Basal Metabolic Rate (BMR) — the number of calories your body needs just to maintain basic functions like breathing and circulation while at rest. When you factor in your daily activity level, you get your Total Daily Energy Expenditure (TDEE). Eating close to your TDEE helps you maintain your current weight, while eating slightly below supports gradual, sustainable fat loss, and eating above supports muscle gain.</p>
+          <p>The Mifflin-St Jeor equation, used by this planner, is widely regarded as the most accurate formula for estimating BMR. It takes into account your sex, weight, height, and age — four variables that together paint a much clearer picture of your energy needs than generic calorie charts ever could.</p>
           <div class="article-img-block">
-            <img
-              src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80"
-              alt="Nutritious meal prep with vegetables and grains"
-            />
-            <p class="article-img-caption">
-              Meal prepping with whole foods makes it easier to stay on track with your calorie and nutrition goals.
-            </p>
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80" alt="Nutritious meal prep with vegetables and grains" />
+            <p class="article-img-caption">Meal prepping with whole foods makes it easier to stay on track with your calorie and nutrition goals.</p>
           </div>
-
           <h3 class="article-h3">The Role of Macronutrients</h3>
-          <p>
-            A well-balanced meal plan is built around three macronutrients: proteins, carbohydrates,
-            and fats. Each plays a distinct and irreplaceable role in your body.
-          </p>
-          <p>
-            <strong>Protein</strong> is the building block of muscle tissue. It also promotes
-            satiety — keeping you fuller for longer — and supports immune function. Good sources
-            include lean meats, fish, eggs, legumes, tofu, and dairy products.
-          </p>
-          <p>
-            <strong>Carbohydrates</strong> are your body's preferred energy source, especially
-            for the brain and during physical activity. Choosing complex carbohydrates — such as
-            oats, brown rice, sweet potatoes, and whole grain bread — over refined sugars ensures
-            a steady release of energy without sharp blood sugar spikes.
-          </p>
-          <p>
-            <strong>Healthy fats</strong> from sources like avocado, olive oil, nuts, and fatty
-            fish support hormone production, vitamin absorption, and cardiovascular health. Despite
-            their caloric density, they are an essential part of any balanced diet.
-          </p>
-
+          <p>A well-balanced meal plan is built around three macronutrients: proteins, carbohydrates, and fats. Each plays a distinct and irreplaceable role in your body.</p>
+          <p><strong>Protein</strong> is the building block of muscle tissue. It also promotes satiety — keeping you fuller for longer — and supports immune function. Good sources include lean meats, fish, eggs, legumes, tofu, and dairy products.</p>
+          <p><strong>Carbohydrates</strong> are your body's preferred energy source, especially for the brain and during physical activity. Choosing complex carbohydrates — such as oats, brown rice, sweet potatoes, and whole grain bread — over refined sugars ensures a steady release of energy without sharp blood sugar spikes.</p>
+          <p><strong>Healthy fats</strong> from sources like avocado, olive oil, nuts, and fatty fish support hormone production, vitamin absorption, and cardiovascular health. Despite their caloric density, they are an essential part of any balanced diet.</p>
           <h3 class="article-h3">Why Allergies and Dietary Preferences Matter</h3>
-          <p>
-            Food allergies and intolerances affect millions of people worldwide. Eating a food
-            you are allergic or sensitive to can cause anything from mild discomfort to severe
-            reactions. Beyond medical allergies, many people choose to follow specific dietary
-            patterns — vegetarian, vegan, or non-vegetarian — for ethical, environmental, or
-            personal health reasons.
-          </p>
-          <p>
-            A truly personalized meal plan respects these boundaries without sacrificing
-            nutritional completeness. For example, someone avoiding dairy can still meet their
-            calcium needs through fortified plant milks, tofu, broccoli, and kale. Someone
-            avoiding gluten can still enjoy a carbohydrate-rich diet through rice, quinoa,
-            potatoes, and certified gluten-free oats.
-          </p>
-
-          <!-- Article image 2 -->
+          <p>Food allergies and intolerances affect millions of people worldwide. Eating a food you are allergic or sensitive to can cause anything from mild discomfort to severe reactions. Beyond medical allergies, many people choose to follow specific dietary patterns — vegetarian, vegan, or non-vegetarian — for ethical, environmental, or personal health reasons.</p>
+          <p>A truly personalized meal plan respects these boundaries without sacrificing nutritional completeness. For example, someone avoiding dairy can still meet their calcium needs through fortified plant milks, tofu, broccoli, and kale. Someone avoiding gluten can still enjoy a carbohydrate-rich diet through rice, quinoa, potatoes, and certified gluten-free oats.</p>
           <div class="article-img-block">
-            <img
-              src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=900&q=80"
-              alt="Fresh fruits and vegetables on a table"
-            />
-            <p class="article-img-caption">
-              A colourful variety of fruits and vegetables ensures a wide range of vitamins, minerals, and antioxidants.
-            </p>
+            <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=900&q=80" alt="Fresh fruits and vegetables on a table" />
+            <p class="article-img-caption">A colourful variety of fruits and vegetables ensures a wide range of vitamins, minerals, and antioxidants.</p>
           </div>
-
           <h3 class="article-h3">The 7-Day Meal Plan Advantage</h3>
-          <p>
-            Planning your meals a week in advance is one of the most effective strategies for
-            maintaining a healthy diet. It removes the daily decision fatigue of figuring out
-            what to eat, reduces the temptation to reach for convenient but unhealthy options,
-            and makes grocery shopping more efficient and cost-effective.
-          </p>
-          <p>
-            Studies published in the <em>International Journal of Behavioral Nutrition and
-            Physical Activity</em> found that people who plan their meals in advance have
-            significantly higher diet quality scores, greater dietary variety, and lower rates
-            of obesity compared to those who do not plan ahead.
-          </p>
-
+          <p>Planning your meals a week in advance is one of the most effective strategies for maintaining a healthy diet. It removes the daily decision fatigue of figuring out what to eat, reduces the temptation to reach for convenient but unhealthy options, and makes grocery shopping more efficient and cost-effective.</p>
+          <p>Studies published in the <em>International Journal of Behavioral Nutrition and Physical Activity</em> found that people who plan their meals in advance have significantly higher diet quality scores, greater dietary variety, and lower rates of obesity compared to those who do not plan ahead.</p>
           <h3 class="article-h3">Small Changes, Big Results</h3>
-          <p>
-            You do not need to overhaul your entire lifestyle overnight. Start by swapping one
-            processed snack per day for a piece of fruit or a handful of nuts. Drink an extra
-            glass of water before each meal. Add one additional serving of vegetables to your
-            dinner plate. These small, consistent changes compound over time into meaningful
-            improvements in energy, body composition, and overall wellbeing.
-          </p>
-          <p>
-            Remember: the best diet is the one you can actually stick to. Personalization is
-            the key to sustainability — and sustainability is the key to lasting health.
-          </p>
-
+          <p>You do not need to overhaul your entire lifestyle overnight. Start by swapping one processed snack per day for a piece of fruit or a handful of nuts. Drink an extra glass of water before each meal. Add one additional serving of vegetables to your dinner plate. These small, consistent changes compound over time into meaningful improvements in energy, body composition, and overall wellbeing.</p>
+          <p>Remember: the best diet is the one you can actually stick to. Personalization is the key to sustainability — and sustainability is the key to lasting health.</p>
           <div class="article-disclaimer">
-            ⚠️ <strong>Disclaimer:</strong> This article is for informational purposes only and
-            does not constitute medical advice. Always consult a registered dietitian or
-            healthcare professional before making significant changes to your diet.
+            ⚠️ <strong>Disclaimer:</strong> This article is for informational purposes only and does not constitute medical advice. Always consult a registered dietitian or healthcare professional before making significant changes to your diet.
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ── FAQ ── -->
     <section id="faq" class="section section-alt" aria-labelledby="faq-title">
       <div class="container">
         <div class="section-head text-center">
           <h2 id="faq-title">❓ Frequently Asked Questions</h2>
           <p>Everything you need to know about using this meal planner.</p>
         </div>
-
         <div class="faq-grid">
 
           <div class="faq-item">
@@ -301,7 +198,7 @@
               <span class="faq-icon">＋</span>
             </button>
             <div class="faq-answer">
-              <p>Your BMR (Basal Metabolic Rate) is calculated using the Mifflin-St Jeor equation, which factors in your sex, age, height, and weight. This is then multiplied by your activity factor to get your TDEE (Total Daily Energy Expenditure). Your goal adjustment (e.g. weight loss or gain) is then applied as a percentage modifier.</p>
+              <p>Your BMR is calculated using the Mifflin-St Jeor equation, which factors in your sex, age, height, and weight. This is then multiplied by your activity factor to get your TDEE. Your goal adjustment (e.g. weight loss or gain) is then applied as a percentage modifier.</p>
             </div>
           </div>
 
@@ -311,7 +208,7 @@
               <span class="faq-icon">＋</span>
             </button>
             <div class="faq-answer">
-              <p>Yes! After generating your plan, you can save it to your browser's local storage to view later on the Saved Plans page, or download it as a <code>.json</code> file to keep a permanent copy. Saved plans persist in your browser until you clear them or delete them manually.</p>
+              <p>Yes! After generating your plan, you can save it and download it as a PDF. Saved plans are stored in your browser until you delete them manually from the Saved Plans page.</p>
             </div>
           </div>
 
@@ -321,7 +218,7 @@
               <span class="faq-icon">＋</span>
             </button>
             <div class="faq-answer">
-              <p>The planner supports five age groups: <strong>Preteens (9–13)</strong>, <strong>Teens (14–18)</strong>, <strong>Young Adults (19–30)</strong>, <strong>Middle-Aged Adults (31–50)</strong>, and <strong>Older Adults (51+)</strong>. Each group has its own curated meal database and calorie targets tailored to typical nutritional needs for that life stage.</p>
+              <p>The planner supports five age groups: <strong>Preteens (9–13)</strong>, <strong>Teens (14–18)</strong>, <strong>Young Adults (19–30)</strong>, <strong>Middle-Aged Adults (31–50)</strong>, and <strong>Older Adults (51+)</strong>. Each group has its own curated meal database and calorie targets.</p>
             </div>
           </div>
 
@@ -331,7 +228,7 @@
               <span class="faq-icon">＋</span>
             </button>
             <div class="faq-answer">
-              <p>The Alternatives page shows you safe food substitutions for each allergen you selected. For example, if you are allergic to dairy, it will show you which nutrients you might miss and suggest alternatives like fortified almond milk, tofu, broccoli, and kale that provide the same nutrients without the allergen.</p>
+              <p>The Alternatives page shows you safe food substitutions for each allergen you selected. For example, if you are allergic to dairy, it suggests alternatives like fortified almond milk, tofu, broccoli, and kale that provide the same nutrients without the allergen.</p>
             </div>
           </div>
 
@@ -339,19 +236,14 @@
       </div>
     </section>
 
-    <!-- ── About (professional footer-style) ── -->
     <section id="about" class="about-section" aria-labelledby="about-title">
-
-      <!-- Top about content -->
       <div class="about-top">
         <div class="container about-top-inner">
-
           <div class="about-col about-col--brand">
             <div class="about-brand-icon">🥗</div>
             <div class="about-brand-name">Personalized Calorie<br>Intake Meal Planner</div>
             <p class="about-brand-tagline">Empowering healthy choices,<br>one meal at a time.</p>
           </div>
-
           <div class="about-col">
             <h4 class="about-col-title">Project Info</h4>
             <ul class="about-col-list">
@@ -361,7 +253,6 @@
               <li><span class="about-col-key">Year:</span> 2025</li>
             </ul>
           </div>
-
           <div class="about-col">
             <h4 class="about-col-title">Navigate</h4>
             <ul class="about-col-list">
@@ -374,25 +265,17 @@
               <li><a href="profile.html">Profile</a></li>
             </ul>
           </div>
-
           <div class="about-col">
             <h4 class="about-col-title">Purpose</h4>
-            <p class="about-col-text">
-              This tool helps users create healthy, personalized 7-day meal plans tailored to
-              their body, lifestyle, and dietary needs. It is not a substitute for professional
-              medical advice.
-            </p>
+            <p class="about-col-text">This tool helps users create healthy, personalized 7-day meal plans tailored to their body, lifestyle, and dietary needs. It is not a substitute for professional medical advice.</p>
             <div class="about-links">
               <a href="#" class="about-link-btn">▶ Demo</a>
               <a href="#" class="about-link-btn">💻 GitHub</a>
               <a href="#" class="about-link-btn">✉ Contact</a>
             </div>
           </div>
-
         </div>
       </div>
-
-      <!-- Bottom copyright bar -->
       <div class="about-bottom">
         <div class="container about-bottom-inner">
           <p>© 2025 Personalized Calorie Intake Meal Planner. All rights reserved.</p>
@@ -403,7 +286,6 @@
           </nav>
         </div>
       </div>
-
     </section>
 
   </main>

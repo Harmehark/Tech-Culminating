@@ -24,13 +24,11 @@
           <li><a href="saved.html">💾 Saved Plans</a></li>
           <li><a href="alternatives.html">🔄 Alternatives</a></li>
           <li><a href="profile.html">👤 Profile</a></li>
+          <li class="nav-auth-item" id="li-login-btn"><a href="#" class="nav-auth-link" id="nav-login-btn">🔑 Log In</a></li>
+          <li class="nav-auth-item" id="li-signup-btn"><a href="#" class="nav-auth-link nav-auth-link--primary" id="nav-signup-btn">✨ Sign Up</a></li>
+          <li class="nav-auth-item" id="li-logout-btn" style="display:none"><a href="#" class="nav-auth-link" id="nav-logout-btn">🚪 Log Out</a></li>
+          <li class="nav-auth-item" id="li-profile-btn" style="display:none"><a href="#" class="nav-auth-link nav-auth-link--profile" id="nav-profile-btn">👤 Profile</a></li>
         </ul>
-        <div class="nav-auth">
-          <button class="btn btn-ghost btn-sm" id="nav-login-btn">🔑 Log In</button>
-          <button class="btn btn-primary btn-sm" id="nav-signup-btn">✨ Sign Up</button>
-          <button class="btn btn-ghost btn-sm" id="nav-logout-btn" style="display:none">🚪 Log Out</button>
-          <button class="btn btn-secondary btn-sm" id="nav-profile-btn" style="display:none">👤 Profile</button>
-        </div>
       </nav>
     </div>
   </header>
@@ -51,12 +49,10 @@
           <label for="name">Name</label>
           <input id="name" name="name" type="text" placeholder="Enter your name" />
         </div>
-
         <div class="field">
           <label for="age">Age <span class="req">*</span></label>
           <input id="age" name="age" type="number" min="10" max="100" placeholder="Enter your age" required />
         </div>
-
         <div class="field">
           <label for="sex">Sex <span class="req">*</span></label>
           <select id="sex" name="sex" required>
@@ -65,17 +61,14 @@
             <option value="Male">Male</option>
           </select>
         </div>
-
         <div class="field">
           <label for="height">Height (cm) <span class="req">*</span></label>
           <input id="height" name="height" type="number" min="120" max="230" placeholder="e.g. 170" required />
         </div>
-
         <div class="field">
           <label for="weight">Weight (kg) <span class="req">*</span></label>
           <input id="weight" name="weight" type="number" min="30" max="250" placeholder="e.g. 65" required />
         </div>
-
         <div class="field">
           <label for="goals">Goal</label>
           <select id="goals" name="goals">
