@@ -637,17 +637,22 @@ input::placeholder { color: #aac0aa; }
   opacity: 0; pointer-events: none;
   transition: opacity 0.25s;
   padding: 16px;
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+  padding: 16px;
+  /* Modal must NEVER block page scroll — only intercept its own clicks */
+  overflow-y: auto;
 }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal-box {
-  background: var(--panel);
-  border-radius: 20px;
-  padding: clamp(24px, 5vw, 40px);
-  width: 100%; max-width: 420px;
-  position: relative;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-  max-height: 90vh; overflow-y: auto;
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
 }
+
 .modal-close {
   position: absolute; top: 16px; right: 16px;
   background: var(--bg); border: 1px solid var(--border);
@@ -994,4 +999,208 @@ input::placeholder { color: #aac0aa; }
   .nav-auth-link--primary {
     background: transparent !important;
   }
+}
+/* ============================================================
+   FULL-PAGE SNAP SCROLL — index.html only
+   ============================================================ */
+html.snap-page {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100%;
+}
+html.snap-page body {
+  height: 100%;
+  overflow-y: unset;
+}
+html.snap-page .snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.snap-page .snap-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+html.snap-page .hero { min-height: 100vh; }
+
+/* Stagger children */
+html.snap-page .snap-section.in-view .stagger-child {
+  animation: staggerUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+html.snap-page .snap-section.in-view .stagger-child:nth-child(1) { animation-delay: 0.05s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(2) { animation-delay: 0.13s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(3) { animation-delay: 0.21s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(4) { animation-delay: 0.29s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(5) { animation-delay: 0.37s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(6) { animation-delay: 0.45s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(7) { animation-delay: 0.53s; }
+html.snap-page .snap-section.in-view .stagger-child:nth-child(8) { animation-delay: 0.61s; }
+
+@keyframes staggerUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Side dot navigation */
+.snap-dots {
+  position: fixed; right: 20px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 500;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.snap-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(46,125,50,0.25);
+  border: 2px solid var(--brand);
+  cursor: pointer;
+  transition: all 0.25s;
+  padding: 0; outline: none;
+}
+.snap-dot.active {
+  background: var(--brand);
+  transform: scale(1.4);
+}
+.snap-dot:hover { background: var(--brand-mid); }
+
+@media (max-width: 700px) {
+  html.snap-page { scroll-snap-type: none; }
+  html.snap-page .snap-section { min-height: unset; opacity: 1; transform: none; }
+  .snap-dots { display: none; }
+}
+
+/* ============================================================
+   AUTH NAV BUTTONS
+   ============================================================ */
+.nav-auth-item { list-style: none; }
+.nav-auth-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 13px !important;
+  border-radius: 8px;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.9) !important;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  transition: all 0.15s;
+  white-space: nowrap;
+  text-decoration: none !important;
+  background: transparent;
+  cursor: pointer;
+}
+.nav-auth-link:hover {
+  background: rgba(255,255,255,0.18) !important;
+  color: #fff !important;
+}
+.nav-auth-link--primary {
+  background: rgba(255,255,255,0.2) !important;
+  border-color: rgba(255,255,255,0.6) !important;
+}
+.nav-auth-link--primary:hover {
+  background: rgba(255,255,255,0.32) !important;
+}
+.nav-auth-link--profile {
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+  padding: 16px;
+  overflow-y: auto;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--panel); border-radius: 20px;
+  padding: clamp(24px, 5vw, 40px);
+  width: 100%; max-width: 420px;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  max-height: 90vh; overflow-y: auto;
+  margin: auto;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; color: var(--muted);
+  transition: background 0.15s;
+}
+.modal-close:hover { background: var(--border); }
+.modal-logo { font-size: 48px; text-align: center; margin-bottom: 12px; }
+.modal-box h2 { text-align: center; font-size: 22px; color: var(--brand-dark); margin-bottom: 6px; }
+.modal-sub { text-align: center; color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.modal-choice-btns { display: flex; flex-direction: column; gap: 12px; }
+.modal-full-btn { width: 100%; justify-content: center; }
+.modal-form { display: flex; flex-direction: column; gap: 14px; }
+.modal-field { display: flex; flex-direction: column; gap: 5px; }
+.modal-field label { font-size: 13px; font-weight: 600; color: var(--brand-dark); }
+.modal-field input {
+  padding: 10px 13px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); font-size: 15px;
+  font-family: inherit; background: var(--bg); color: var(--text); width: 100%;
+}
+.modal-field input:focus {
+  outline: none; border-color: var(--brand-mid);
+  box-shadow: 0 0 0 3px var(--ring); background: #fff;
+}
+.modal-error {
+  background: #fdecea; border: 1px solid #f5c6c6;
+  color: var(--danger); border-radius: var(--radius-sm);
+  padding: 9px 12px; font-size: 13px;
+}
+.modal-switch { text-align: center; font-size: 13px; color: var(--muted); margin: 0; }
+.modal-link {
+  background: none; border: none; cursor: pointer;
+  color: var(--brand); font-weight: 600; font-size: 13px;
+  padding: 0; font-family: inherit; text-decoration: underline;
+}
+.modal-link:hover { color: var(--brand-dark); }
+.profile-details { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+.profile-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 12px; background: var(--bg);
+  border-radius: var(--radius-sm); border: 1px solid var(--border); font-size: 13px;
+}
+.profile-row span:first-child { color: var(--muted); font-weight: 600; }
+.profile-row span:last-child  { color: var(--text); font-weight: 500; }
+
+/* Toast */
+#toast {
+  position: fixed; left: 50%; bottom: 28px;
+  transform: translateX(-50%);
+  background: var(--brand-dark); color: #fff;
+  border: 1px solid var(--brand);
+  padding: 11px 22px; border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg); z-index: 9999;
+  font-size: 14px; font-weight: 500;
+  opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .nav-auth-link {
+    font-size: 14px !important; padding: 9px 14px !important;
+    border: none !important; background: transparent !important;
+    color: rgba(255,255,255,0.9) !important;
+    width: 100%; justify-content: flex-start;
+  }
+  .nav-auth-link--primary { background: transparent !important; }
 }
