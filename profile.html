@@ -42,6 +42,11 @@
 
   <main class="section">
     <div class="container">
+
+      <!-- ✅ Success / error banner -->
+      <div id="profile-banner" style="display:none;margin-bottom:16px;padding:14px 18px;
+        border-radius:10px;font-size:14px;font-weight:500"></div>
+
       <form id="profile-form" class="card form-grid">
         <div class="field">
           <label for="p-name">Name</label>
@@ -101,7 +106,7 @@
         </div>
         <div class="form-actions field--full">
           <button class="btn btn-primary" id="save-profile" type="button">💾 Save Defaults</button>
-          <button class="btn btn-ghost" id="clear-profile" type="button">🗑 Clear Profile</button>
+          <button class="btn btn-ghost"   id="clear-profile" type="button">🗑 Clear Profile</button>
         </div>
       </form>
     </div>
@@ -118,6 +123,7 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <!-- ✅ FIXED: removed defer -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -98,10 +98,10 @@
           </div>
         </div>
 
+        <!-- ✅ FIXED: default option now has value="none" instead of value="" -->
         <div class="field field--full">
           <label for="diet">Dietary Preference <span class="req">*</span></label>
           <select id="diet" name="diet" required>
-            <option value="">Select your preference</option>
             <option value="none">No restriction</option>
             <option value="vegetarian">Vegetarian</option>
             <option value="vegan">Vegan</option>
@@ -144,6 +144,7 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <!-- ✅ FIXED: removed defer -->
+  <script src="script.js"></script>
 </body>
 </html>
