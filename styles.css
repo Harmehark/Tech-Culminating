@@ -1204,3 +1204,183 @@ html.snap-page .snap-section.in-view .stagger-child:nth-child(8) { animation-del
   }
   .nav-auth-link--primary { background: transparent !important; }
 }
+/* ══════════════════════════════════════════════════════════
+   ANIMATIONS & SCROLL EFFECTS
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Smooth scroll (CSS-level, covers all browsers) ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Section entrance: default hidden state ── */
+.snap-section,
+.anim-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Section visible state ── */
+.snap-section.in-view,
+.anim-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section "jump-up" pulse when navigated to directly ── */
+@keyframes sectionPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  30%  { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.18); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+.section-pulse {
+  animation: sectionPulse 0.9s ease-out forwards;
+  border-radius: 16px;
+}
+
+/* ── Nav link active highlight ── */
+.top-nav a.nav-active {
+  color: #2e7d32 !important;
+  font-weight: 700;
+  position: relative;
+}
+.top-nav a.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #4caf50;
+  border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ELEMENT-LEVEL ANIMATIONS (fade, slide, zoom)
+   ══════════════════════════════════════════════════════════ */
+
+/* Base hidden state for all animated elements */
+[data-anim] {
+  opacity: 0;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Fade in */
+[data-anim="fade"] {
+  transform: none;
+}
+
+/* Slide up */
+[data-anim="slide-up"] {
+  transform: translateY(40px);
+}
+
+/* Slide left */
+[data-anim="slide-left"] {
+  transform: translateX(-40px);
+}
+
+/* Slide right */
+[data-anim="slide-right"] {
+  transform: translateX(40px);
+}
+
+/* Zoom in */
+[data-anim="zoom"] {
+  transform: scale(0.88);
+}
+
+/* Visible state for all animated elements */
+[data-anim].anim-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered delay helpers */
+[data-delay="100"] { transition-delay: 0.10s; }
+[data-delay="200"] { transition-delay: 0.20s; }
+[data-delay="300"] { transition-delay: 0.30s; }
+[data-delay="400"] { transition-delay: 0.40s; }
+[data-delay="500"] { transition-delay: 0.50s; }
+[data-delay="600"] { transition-delay: 0.60s; }
+
+/* ── Respect reduced motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .snap-section,
+  .anim-section,
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ══════════════════════════════════════════════════════════
+   PDF-STYLE RESULT PAGE
+   ══════════════════════════════════════════════════════════ */
+
+.pdf-day-card {
+  background: #fff;
+  border: 1px solid #d0e8d0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  page-break-inside: avoid;
+}
+
+.pdf-day-title {
+  background: #2e7d32;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.pdf-meal-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 20px;
+  border-bottom: 1px solid #e8f5e9;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pdf-meal-row:last-child {
+  border-bottom: none;
+}
+
+.pdf-meal-label {
+  font-weight: 700;
+  color: #2e7d32;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.pdf-meal-text {
+  color: #1a2e1a;
+}
+
+/* Hover effect on rows */
+.pdf-meal-row:hover {
+  background: #f4f7f2;
+}
+
+/* Responsive: stack label above text on small screens */
+@media (max-width: 480px) {
+  .pdf-meal-row {
+    flex-direction: column;
+    gap: 3px;
+  }
+  .pdf-meal-label {
+    min-width: unset;
+  }
+}
