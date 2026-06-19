@@ -597,7 +597,7 @@
         '</div>';
       panelsEl.appendChild(panel);
     });
-  }
+  
 
   function getChecked(name) {
     return $$('input[name="' + name + '"]:checked').map(function (i) { return i.value.toLowerCase(); });
@@ -1074,7 +1074,7 @@
     }
   }
 
-})();
+
   // ══════════════════════════════════════════════════════════
   //  HOMEPAGE ANIMATIONS
   // ══════════════════════════════════════════════════════════
