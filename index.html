@@ -35,16 +35,17 @@
 
   <main id="home">
 
-    <section class="hero" aria-labelledby="hero-title">
+    <!-- ── HERO ── -->
+    <section class="hero anim-section" aria-labelledby="hero-title">
       <div class="container hero-inner">
         <div class="hero-copy">
-          <h1 id="hero-title">Eat Smart,<br>Live Healthy</h1>
-          <p>Create personalized meal plans based on your age, activity level, dietary preferences, and allergies.</p>
-          <div class="hero-btns">
+          <h1 id="hero-title" data-anim="fade">Eat Smart,<br>Live Healthy</h1>
+          <p data-anim="slide-up" data-delay="200">Create personalized meal plans based on your age, activity level, dietary preferences, and allergies.</p>
+          <div class="hero-btns" data-anim="zoom" data-delay="400">
             <a class="btn btn-primary btn-lg" href="form.html">🍽️ Create Meal Plan</a>
           </div>
         </div>
-        <div class="hero-photos" role="img" aria-label="Healthy meal and checklist photos">
+        <div class="hero-photos" role="img" aria-label="Healthy meal and checklist photos" data-anim="slide-right" data-delay="300">
           <div class="hero-photo-stack">
             <div class="hero-photo">
               <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" alt="Healthy colorful meal bowl" />
@@ -59,34 +60,35 @@
       </div>
     </section>
 
-    <section id="nutrition" class="section section-alt" aria-labelledby="nutrition-title">
+    <!-- ── NUTRITION GUIDE ── -->
+    <section id="nutrition" class="section section-alt anim-section" aria-labelledby="nutrition-title">
       <div class="container">
         <div class="section-head text-center">
-          <h2 id="nutrition-title">📚 Nutrition Guide</h2>
-          <p>Why is healthy eating important?</p>
+          <h2 id="nutrition-title" data-anim="fade">📚 Nutrition Guide</h2>
+          <p data-anim="slide-up" data-delay="100">Why is healthy eating important?</p>
         </div>
         <div class="nutrition-icons">
-          <div class="nutrition-icon-item">
+          <div class="nutrition-icon-item" data-anim="slide-up" data-delay="100">
             <div class="nut-icon">🥗</div>
             <div class="nut-label">Balanced Nutrition</div>
             <div class="nut-desc">Provides essential nutrients your body needs every day</div>
           </div>
-          <div class="nutrition-icon-item">
+          <div class="nutrition-icon-item" data-anim="slide-up" data-delay="200">
             <div class="nut-icon">⚖️</div>
             <div class="nut-label">Manage Calories</div>
             <div class="nut-desc">Helps maintain a healthy weight and prevents disease</div>
           </div>
-          <div class="nutrition-icon-item">
+          <div class="nutrition-icon-item" data-anim="slide-up" data-delay="300">
             <div class="nut-icon">🏃</div>
             <div class="nut-label">Exercise Benefits</div>
             <div class="nut-desc">Improves physical fitness, mood, and overall well-being</div>
           </div>
-          <div class="nutrition-icon-item">
+          <div class="nutrition-icon-item" data-anim="slide-up" data-delay="400">
             <div class="nut-icon">💪</div>
             <div class="nut-label">Healthy Habits</div>
             <div class="nut-desc">Builds long-term habits for a healthier lifestyle</div>
           </div>
-          <div class="nutrition-icon-item">
+          <div class="nutrition-icon-item" data-anim="slide-up" data-delay="500">
             <div class="nut-icon">🍎</div>
             <div class="nut-label">Food Groups</div>
             <div class="nut-desc">Eating a variety of foods keeps your body strong</div>
@@ -95,64 +97,66 @@
       </div>
     </section>
 
-    <section id="article" class="section" aria-labelledby="article-title">
+    <!-- ── HEALTH ARTICLE ── -->
+    <section id="article" class="section anim-section" aria-labelledby="article-title">
       <div class="container">
         <div class="article-wrap">
-          <div class="article-meta">
+          <div class="article-meta" data-anim="fade">
             <span class="article-tag">🌿 Health & Nutrition</span>
             <span class="article-date">June 2025</span>
           </div>
-          <h2 id="article-title" class="article-title">
+          <h2 id="article-title" class="article-title" data-anim="slide-up" data-delay="100">
             The Science of Eating Well: How a Personalized Meal Plan Can Transform Your Health
           </h2>
-          <p class="article-lead">
+          <p class="article-lead" data-anim="slide-up" data-delay="200">
             Eating well is not about strict diets or depriving yourself of the foods you love.
             It is about feeling great, having more energy, improving your health, and boosting
             your mood. Research consistently shows that a personalized approach to nutrition —
             one that accounts for your age, body composition, activity level, and food
             sensitivities — produces far better long-term outcomes than any one-size-fits-all diet.
           </p>
-          <h3 class="article-h3">Understanding Your Caloric Needs</h3>
-          <p>Every person has a unique Basal Metabolic Rate (BMR) — the number of calories your body needs just to maintain basic functions like breathing and circulation while at rest. When you factor in your daily activity level, you get your Total Daily Energy Expenditure (TDEE). Eating close to your TDEE helps you maintain your current weight, while eating slightly below supports gradual, sustainable fat loss, and eating above supports muscle gain.</p>
-          <p>The Mifflin-St Jeor equation, used by this planner, is widely regarded as the most accurate formula for estimating BMR. It takes into account your sex, weight, height, and age — four variables that together paint a much clearer picture of your energy needs than generic calorie charts ever could.</p>
-          <div class="article-img-block">
+          <h3 class="article-h3" data-anim="fade">Understanding Your Caloric Needs</h3>
+          <p data-anim="slide-up" data-delay="100">Every person has a unique Basal Metabolic Rate (BMR) — the number of calories your body needs just to maintain basic functions like breathing and circulation while at rest. When you factor in your daily activity level, you get your Total Daily Energy Expenditure (TDEE). Eating close to your TDEE helps you maintain your current weight, while eating slightly below supports gradual, sustainable fat loss, and eating above supports muscle gain.</p>
+          <p data-anim="slide-up" data-delay="200">The Mifflin-St Jeor equation, used by this planner, is widely regarded as the most accurate formula for estimating BMR. It takes into account your sex, weight, height, and age — four variables that together paint a much clearer picture of your energy needs than generic calorie charts ever could.</p>
+          <div class="article-img-block" data-anim="zoom" data-delay="100">
             <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80" alt="Nutritious meal prep with vegetables and grains" />
             <p class="article-img-caption">Meal prepping with whole foods makes it easier to stay on track with your calorie and nutrition goals.</p>
           </div>
-          <h3 class="article-h3">The Role of Macronutrients</h3>
-          <p>A well-balanced meal plan is built around three macronutrients: proteins, carbohydrates, and fats. Each plays a distinct and irreplaceable role in your body.</p>
-          <p><strong>Protein</strong> is the building block of muscle tissue. It also promotes satiety — keeping you fuller for longer — and supports immune function. Good sources include lean meats, fish, eggs, legumes, tofu, and dairy products.</p>
-          <p><strong>Carbohydrates</strong> are your body's preferred energy source, especially for the brain and during physical activity. Choosing complex carbohydrates — such as oats, brown rice, sweet potatoes, and whole grain bread — over refined sugars ensures a steady release of energy without sharp blood sugar spikes.</p>
-          <p><strong>Healthy fats</strong> from sources like avocado, olive oil, nuts, and fatty fish support hormone production, vitamin absorption, and cardiovascular health. Despite their caloric density, they are an essential part of any balanced diet.</p>
-          <h3 class="article-h3">Why Allergies and Dietary Preferences Matter</h3>
-          <p>Food allergies and intolerances affect millions of people worldwide. Eating a food you are allergic or sensitive to can cause anything from mild discomfort to severe reactions. Beyond medical allergies, many people choose to follow specific dietary patterns — vegetarian, vegan, or non-vegetarian — for ethical, environmental, or personal health reasons.</p>
-          <p>A truly personalized meal plan respects these boundaries without sacrificing nutritional completeness. For example, someone avoiding dairy can still meet their calcium needs through fortified plant milks, tofu, broccoli, and kale. Someone avoiding gluten can still enjoy a carbohydrate-rich diet through rice, quinoa, potatoes, and certified gluten-free oats.</p>
-          <div class="article-img-block">
+          <h3 class="article-h3" data-anim="fade">The Role of Macronutrients</h3>
+          <p data-anim="slide-up" data-delay="100">A well-balanced meal plan is built around three macronutrients: proteins, carbohydrates, and fats. Each plays a distinct and irreplaceable role in your body.</p>
+          <p data-anim="slide-up" data-delay="200"><strong>Protein</strong> is the building block of muscle tissue. It also promotes satiety — keeping you fuller for longer — and supports immune function. Good sources include lean meats, fish, eggs, legumes, tofu, and dairy products.</p>
+          <p data-anim="slide-up" data-delay="300"><strong>Carbohydrates</strong> are your body's preferred energy source, especially for the brain and during physical activity. Choosing complex carbohydrates — such as oats, brown rice, sweet potatoes, and whole grain bread — over refined sugars ensures a steady release of energy without sharp blood sugar spikes.</p>
+          <p data-anim="slide-up" data-delay="400"><strong>Healthy fats</strong> from sources like avocado, olive oil, nuts, and fatty fish support hormone production, vitamin absorption, and cardiovascular health. Despite their caloric density, they are an essential part of any balanced diet.</p>
+          <h3 class="article-h3" data-anim="fade">Why Allergies and Dietary Preferences Matter</h3>
+          <p data-anim="slide-up" data-delay="100">Food allergies and intolerances affect millions of people worldwide. Eating a food you are allergic or sensitive to can cause anything from mild discomfort to severe reactions. Beyond medical allergies, many people choose to follow specific dietary patterns — vegetarian, vegan, or non-vegetarian — for ethical, environmental, or personal health reasons.</p>
+          <p data-anim="slide-up" data-delay="200">A truly personalized meal plan respects these boundaries without sacrificing nutritional completeness. For example, someone avoiding dairy can still meet their calcium needs through fortified plant milks, tofu, broccoli, and kale. Someone avoiding gluten can still enjoy a carbohydrate-rich diet through rice, quinoa, potatoes, and certified gluten-free oats.</p>
+          <div class="article-img-block" data-anim="zoom" data-delay="100">
             <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=900&q=80" alt="Fresh fruits and vegetables on a table" />
             <p class="article-img-caption">A colourful variety of fruits and vegetables ensures a wide range of vitamins, minerals, and antioxidants.</p>
           </div>
-          <h3 class="article-h3">The 7-Day Meal Plan Advantage</h3>
-          <p>Planning your meals a week in advance is one of the most effective strategies for maintaining a healthy diet. It removes the daily decision fatigue of figuring out what to eat, reduces the temptation to reach for convenient but unhealthy options, and makes grocery shopping more efficient and cost-effective.</p>
-          <p>Studies published in the <em>International Journal of Behavioral Nutrition and Physical Activity</em> found that people who plan their meals in advance have significantly higher diet quality scores, greater dietary variety, and lower rates of obesity compared to those who do not plan ahead.</p>
-          <h3 class="article-h3">Small Changes, Big Results</h3>
-          <p>You do not need to overhaul your entire lifestyle overnight. Start by swapping one processed snack per day for a piece of fruit or a handful of nuts. Drink an extra glass of water before each meal. Add one additional serving of vegetables to your dinner plate. These small, consistent changes compound over time into meaningful improvements in energy, body composition, and overall wellbeing.</p>
-          <p>Remember: the best diet is the one you can actually stick to. Personalization is the key to sustainability — and sustainability is the key to lasting health.</p>
-          <div class="article-disclaimer">
+          <h3 class="article-h3" data-anim="fade">The 7-Day Meal Plan Advantage</h3>
+          <p data-anim="slide-up" data-delay="100">Planning your meals a week in advance is one of the most effective strategies for maintaining a healthy diet. It removes the daily decision fatigue of figuring out what to eat, reduces the temptation to reach for convenient but unhealthy options, and makes grocery shopping more efficient and cost-effective.</p>
+          <p data-anim="slide-up" data-delay="200">Studies published in the <em>International Journal of Behavioral Nutrition and Physical Activity</em> found that people who plan their meals in advance have significantly higher diet quality scores, greater dietary variety, and lower rates of obesity compared to those who do not plan ahead.</p>
+          <h3 class="article-h3" data-anim="fade">Small Changes, Big Results</h3>
+          <p data-anim="slide-up" data-delay="100">You do not need to overhaul your entire lifestyle overnight. Start by swapping one processed snack per day for a piece of fruit or a handful of nuts. Drink an extra glass of water before each meal. Add one additional serving of vegetables to your dinner plate. These small, consistent changes compound over time into meaningful improvements in energy, body composition, and overall wellbeing.</p>
+          <p data-anim="slide-up" data-delay="200">Remember: the best diet is the one you can actually stick to. Personalization is the key to sustainability — and sustainability is the key to lasting health.</p>
+          <div class="article-disclaimer" data-anim="fade" data-delay="200">
             ⚠️ <strong>Disclaimer:</strong> This article is for informational purposes only and does not constitute medical advice. Always consult a registered dietitian or healthcare professional before making significant changes to your diet.
           </div>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="section section-alt" aria-labelledby="faq-title">
+    <!-- ── FAQ ── -->
+    <section id="faq" class="section section-alt anim-section" aria-labelledby="faq-title">
       <div class="container">
         <div class="section-head text-center">
-          <h2 id="faq-title">❓ Frequently Asked Questions</h2>
-          <p>Everything you need to know about using this meal planner.</p>
+          <h2 id="faq-title" data-anim="fade">❓ Frequently Asked Questions</h2>
+          <p data-anim="slide-up" data-delay="100">Everything you need to know about using this meal planner.</p>
         </div>
         <div class="faq-grid">
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="100">
             <button class="faq-question" aria-expanded="false">
               How does the meal plan generator work?
               <span class="faq-icon">＋</span>
@@ -162,7 +166,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="200">
             <button class="faq-question" aria-expanded="false">
               Is this a substitute for professional dietary advice?
               <span class="faq-icon">＋</span>
@@ -172,7 +176,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="300">
             <button class="faq-question" aria-expanded="false">
               What dietary preferences are supported?
               <span class="faq-icon">＋</span>
@@ -182,7 +186,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="400">
             <button class="faq-question" aria-expanded="false">
               Which allergies can I filter out?
               <span class="faq-icon">＋</span>
@@ -192,7 +196,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="100">
             <button class="faq-question" aria-expanded="false">
               How are my recommended calories calculated?
               <span class="faq-icon">＋</span>
@@ -202,7 +206,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="200">
             <button class="faq-question" aria-expanded="false">
               Can I save or download my meal plan?
               <span class="faq-icon">＋</span>
@@ -212,7 +216,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="300">
             <button class="faq-question" aria-expanded="false">
               What age groups does the planner support?
               <span class="faq-icon">＋</span>
@@ -222,7 +226,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item" data-anim="slide-up" data-delay="400">
             <button class="faq-question" aria-expanded="false">
               What is the Alternatives page for?
               <span class="faq-icon">＋</span>
@@ -236,15 +240,16 @@
       </div>
     </section>
 
-    <section id="about" class="about-section" aria-labelledby="about-title">
+    <!-- ── ABOUT / FOOTER ── -->
+    <section id="about" class="about-section anim-section" aria-labelledby="about-title">
       <div class="about-top">
         <div class="container about-top-inner">
-          <div class="about-col about-col--brand">
+          <div class="about-col about-col--brand" data-anim="fade">
             <div class="about-brand-icon">🥗</div>
             <div class="about-brand-name">Personalized Calorie<br>Intake Meal Planner</div>
             <p class="about-brand-tagline">Empowering healthy choices,<br>one meal at a time.</p>
           </div>
-          <div class="about-col">
+          <div class="about-col" data-anim="slide-up" data-delay="100">
             <h4 class="about-col-title">Project Info</h4>
             <ul class="about-col-list">
               <li><span class="about-col-key">Creator:</span> Your Name</li>
@@ -253,7 +258,7 @@
               <li><span class="about-col-key">Year:</span> 2025</li>
             </ul>
           </div>
-          <div class="about-col">
+          <div class="about-col" data-anim="slide-up" data-delay="200">
             <h4 class="about-col-title">Navigate</h4>
             <ul class="about-col-list">
               <li><a href="#home">Home</a></li>
@@ -265,7 +270,7 @@
               <li><a href="profile.html">Profile</a></li>
             </ul>
           </div>
-          <div class="about-col">
+          <div class="about-col" data-anim="slide-up" data-delay="300">
             <h4 class="about-col-title">Purpose</h4>
             <p class="about-col-text">This tool helps users create healthy, personalized 7-day meal plans tailored to their body, lifestyle, and dietary needs. It is not a substitute for professional medical advice.</p>
             <div class="about-links">
@@ -289,30 +294,6 @@
     </section>
 
   </main>
-<!-- Headings -->
-<h1 data-anim="fade">Title</h1>
-<h2 data-anim="slide-up">Subtitle</h2>
-
-<!-- Paragraphs -->
-<p data-anim="slide-up" data-delay="100">Some text here.</p>
-
-<!-- Divs / Cards -->
-<div class="card" data-anim="zoom">...</div>
-
-<!-- Buttons -->
-<button data-anim="fade" data-delay="200">Click me</button>
-
-<!-- Images -->
-<img src="photo.jpg" data-anim="slide-left" />
-
-<!-- Lists -->
-<ul data-anim="slide-up">...</ul>
-
-<!-- Form fields -->
-<div class="field" data-anim="fade" data-delay="100">...</div>
-
-<!-- Entire sections -->
-<section id="about" data-anim="slide-up">...</section>
 
   <script src="script.js" defer></script>
 </body>

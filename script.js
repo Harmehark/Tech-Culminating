@@ -1147,4 +1147,83 @@
     });
 
     animEls.forEach(function (el) { elemIO.observe(el); });
+      // ══════════════════════════════════════════════════════════
+  //  HOMEPAGE ANIMATIONS
+  // ══════════════════════════════════════════════════════════
+
+  // ── 1. Smooth scroll + section pulse on nav click ──
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var id     = link.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Pulse fires after scroll animation lands (~620ms)
+      setTimeout(function () {
+        target.classList.add('section-pulse');
+        setTimeout(function () {
+          target.classList.remove('section-pulse');
+        }, 950);
+      }, 620);
+    });
+  });
+
+  // ── 2. Active nav highlight while scrolling ──
+  (function () {
+    var sections  = Array.from(document.querySelectorAll('section[id], [id].anim-section'));
+    var navLinks  = Array.from(document.querySelectorAll('nav a[href^="#"], .top-nav a[href^="#"], .navbar a[href^="#"]'));
+    if (!sections.length || !navLinks.length) return;
+
+    function setActive(id) {
+      navLinks.forEach(function (a) {
+        var match = a.getAttribute('href').slice(1) === id;
+        a.classList.toggle('nav-active', match);
+      });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.35 });
+
+    sections.forEach(function (s) { io.observe(s); });
+  })();
+
+  // ── 3. Section entrance animations (.anim-section) ──
+  (function () {
+    var sections = Array.from(document.querySelectorAll('.anim-section'));
+    if (!sections.length) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    sections.forEach(function (s) { io.observe(s); });
+  })();
+
+  // ── 4. Element-level animations ([data-anim]) ──
+  (function () {
+    var els = Array.from(document.querySelectorAll('[data-anim]'));
+    if (!els.length) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('anim-visible');
+          io.unobserve(entry.target); // plays once only
+        }
+      });
+    }, { threshold: 0.15 });
+
+    els.forEach(function (el) { io.observe(el); });
+  })();
   })();

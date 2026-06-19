@@ -1384,3 +1384,104 @@ html {
     min-width: unset;
   }
 }
+/* ══════════════════════════════════════════════════════════
+   SCROLL ANIMATIONS & NAV HIGHLIGHT SYSTEM
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Smooth scroll (native CSS level) ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Section entrance: starts hidden ── */
+.anim-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.anim-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section pulse: fires when navigated to via nav click ── */
+@keyframes sectionPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(76, 175, 80, 0.00); }
+  30%  { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0.18); }
+  100% { box-shadow: 0 0 0 0   rgba(76, 175, 80, 0.00); }
+}
+.section-pulse {
+  animation: sectionPulse 0.9s ease-out forwards;
+  border-radius: 16px;
+}
+
+/* ── Active nav link ── */
+nav a.nav-active,
+.top-nav a.nav-active,
+.navbar a.nav-active {
+  color: #2e7d32 !important;
+  font-weight: 700;
+  position: relative;
+}
+nav a.nav-active::after,
+.top-nav a.nav-active::after,
+.navbar a.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #4caf50;
+  border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ELEMENT-LEVEL ANIMATIONS
+   ══════════════════════════════════════════════════════════ */
+
+/* All animated elements start hidden */
+[data-anim] {
+  opacity: 0;
+  transition:
+    opacity  0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-anim="fade"]        { transform: none; }
+[data-anim="slide-up"]    { transform: translateY(40px); }
+[data-anim="slide-down"]  { transform: translateY(-40px); }
+[data-anim="slide-left"]  { transform: translateX(-40px); }
+[data-anim="slide-right"] { transform: translateX(40px); }
+[data-anim="zoom"]        { transform: scale(0.88); }
+[data-anim="zoom-out"]    { transform: scale(1.12); }
+
+/* Visible state — added by JS */
+[data-anim].anim-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Stagger delay helpers ── */
+[data-delay="100"] { transition-delay: 0.10s; }
+[data-delay="200"] { transition-delay: 0.20s; }
+[data-delay="300"] { transition-delay: 0.30s; }
+[data-delay="400"] { transition-delay: 0.40s; }
+[data-delay="500"] { transition-delay: 0.50s; }
+[data-delay="600"] { transition-delay: 0.60s; }
+[data-delay="700"] { transition-delay: 0.70s; }
+[data-delay="800"] { transition-delay: 0.80s; }
+
+/* ── Respect user's reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .anim-section,
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
