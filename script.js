@@ -612,6 +612,19 @@
 
   function renderDayTabs(tabsEl, panelsEl, plan) {
     tabsEl.innerHTML = panelsEl.innerHTML = '';
+    var DAILY_TIPS = [
+      'Hydrate early: drink a full glass of water before breakfast.',
+      'Build your plate with color: include at least 2 different vegetables today.',
+      'Protein check: aim to include a protein source in every main meal.',
+      'Fiber boost: add one whole-grain or fruit snack between meals.',
+      'Mindful eating: slow down and stop when you feel comfortably full.',
+      'Balance your carbs: pair carbs with protein or healthy fats for steady energy.',
+      'Prep for tomorrow: pre-plan one meal tonight to stay consistent.'
+    ];
+    var tipTextEl = document.getElementById('results-tip-text');
+    function setTip(dayIndex) {
+      if (tipTextEl) tipTextEl.textContent = DAILY_TIPS[dayIndex % DAILY_TIPS.length];
+    }
     plan.forEach(function (d, i) {
       var btn = document.createElement('button');
       btn.className = 'day-tab' + (i === 0 ? ' active' : '');
@@ -626,6 +639,7 @@
         btn.classList.add('active');
         btn.setAttribute('aria-selected','true');
         document.getElementById('panel-' + i).classList.add('active');
+        setTip(i);
       };
       tabsEl.appendChild(btn);
 
@@ -657,6 +671,7 @@
         '</div>';
       panelsEl.appendChild(panel);
     });
+    if (plan.length) setTip(0);
   }
 
   function getChecked(name) {
@@ -707,7 +722,7 @@
   var plannerForm = document.getElementById('planner-form');
   if (plannerForm) {
 
-    var draft = load('cp_form_draft', null) || load('cp_profile', null);
+    var draft = load('cp_profile', null);
     if (draft) {
       ['name','age','sex','height','weight','activity','diet','goals'].forEach(function (id) {
         var el = document.getElementById(id);
@@ -786,10 +801,12 @@
       };
 
       save('cp_latest', payload);
-      save('cp_profile', {
-        name: name, age: age, sex: sex, height: height,
-        weight: weight, activity: activity, diet: diet, allergies: allergies
-      });
+      if (getUser()) {
+        save('cp_profile', {
+          name: name, age: age, sex: sex, height: height,
+          weight: weight, activity: activity, diet: diet, allergies: allergies
+        });
+      }
       save('cp_form_draft', {
         name: name, age: age, sex: sex, height: height,
         weight: weight, activity: activity, diet: diet,
@@ -1081,6 +1098,12 @@
     var saveProfileBtn = document.getElementById('save-profile');
     if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function () {
+        if (!getUser()) {
+          showProfileBanner('⚠️ Please sign in before saving profile details.', false);
+          openModal('screen-login');
+          return;
+        }
+
         var profileData = {
           name:      (document.getElementById('p-name')     || {}).value || '',
           age:       (document.getElementById('p-age')      || {}).value || '',

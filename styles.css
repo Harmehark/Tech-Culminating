@@ -183,14 +183,27 @@ ul { padding-left: 1.4em; }
 .top-nav ul {
   display: flex; gap: 4px;
   list-style: none; padding: 0; margin: 0;
-  flex-wrap: wrap;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.top-nav ul::-webkit-scrollbar { display: none; }
+.top-nav li {
+  display: flex;
+  align-items: center;
 }
 .top-nav a {
+  display: inline-flex;
+  align-items: center;
   color: rgba(255,255,255,0.88);
   padding: 7px 12px; border-radius: 8px;
   font-weight: 500; font-size: 14px;
   transition: background 0.15s;
   white-space: nowrap;
+  line-height: 1;
+  flex-shrink: 0;
 }
 .top-nav a:hover,
 .top-nav a.active {
@@ -204,20 +217,20 @@ ul { padding-left: 1.4em; }
    ============================================================ */
 .hero {
   background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 55%, var(--brand-mid) 100%);
-  padding: clamp(14px, 2.6vw, 34px) 0 clamp(18px, 3vw, 38px);
+  padding: clamp(10px, 1.8vw, 24px) 0 clamp(18px, 3vw, 38px);
   overflow: hidden;
   position: relative;
 }
 .hero-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(16px, 2.4vw, 30px);
+  gap: clamp(14px, 2vw, 28px);
   align-items: center;
 }
 .hero-copy h1 {
-  font-size: clamp(28px, 5vw, 48px);
+  font-size: clamp(32px, 5.8vw, 58px);
   color: #fff; font-weight: 800;
-  line-height: 1.12; margin-bottom: 14px;
+  line-height: 1.2; margin-bottom: 12px;
 }
 .hero-copy p {
   color: rgba(255,255,255,0.85);
@@ -1122,7 +1135,7 @@ html.snap-page .snap-section.in-view {
   opacity: 1;
   transform: translateY(0);
 }
-html.snap-page .hero { min-height: 84vh; }
+html.snap-page .hero { min-height: clamp(420px, 62vh, 620px); }
 
 /* Stagger children */
 html.snap-page .snap-section.in-view .stagger-child {
