@@ -42,24 +42,29 @@
   </div>
 
   <main class="section">
-  <div class="container">
+    <div class="container">
 
-    <!-- Calorie summary box (unchanged) -->
-    <div id="results-calorie-summary" class="hidden" style="margin-bottom:32px"></div>
+      <div id="results-calorie-summary" class="hidden"></div>
 
-    <!-- PDF-style plan body -->
-    <div id="results-plan-body" style="margin-bottom:32px"></div>
+      <div id="results-tabs-wrapper" class="hidden">
+        <div class="day-tabs-wrapper">
+          <div class="day-tabs" id="results-day-tabs" role="tablist"></div>
+        </div>
+        <div id="results-day-panels"></div>
+        <div class="tip-box">
+          <span class="tip-icon">⭐</span>
+          <span><strong>Tip:</strong> Drink plenty of water and stay active every day!</span>
+        </div>
+      </div>
 
-    <!-- Action buttons -->
-    <div id="results-buttons" class="hidden" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px">
-      <button id="save-plan-2" class="btn btn-primary">💾 Save & Download PDF</button>
-      <a href="form.html" class="btn btn-ghost">🔄 Generate New Plan</a>
-      <a href="alternatives.html" class="btn btn-ghost">🔄 View Alternatives</a>
+      <div class="results-actions hidden" id="results-buttons">
+        <button class="btn btn-primary" id="save-plan-2">📄 Save as PDF</button>
+        <a class="btn btn-secondary" href="alternatives.html">🔄 View Alternatives</a>
+        <a class="btn btn-ghost" href="form.html">← Back to Form</a>
+      </div>
+
     </div>
-
-  </div>
-</main>
-
+  </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -73,6 +78,5 @@
   </footer>
 
   <script src="script.js" defer></script>
-  <script src="animations.js" defer></script>
 </body>
 </html>

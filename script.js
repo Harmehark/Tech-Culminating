@@ -539,34 +539,23 @@
     el.classList.remove('hidden');
   }
 
-    function renderPDFStyle(containerEl, plan, meta) {
-    containerEl.innerHTML = '';
-
-    plan.forEach(function (d) {
-      var dayCard = document.createElement('div');
-      dayCard.className = 'pdf-day-card';
-      dayCard.innerHTML =
-        '<div class="pdf-day-title">📅 ' + d.day + '</div>' +
-        '<div class="pdf-meal-row">' +
-          '<span class="pdf-meal-label">🌅 Breakfast</span>' +
-          '<span class="pdf-meal-text">' + d.breakfast + '</span>' +
-        '</div>' +
-        '<div class="pdf-meal-row">' +
-          '<span class="pdf-meal-label">☀️ Lunch</span>' +
-          '<span class="pdf-meal-text">' + d.lunch + '</span>' +
-        '</div>' +
-        '<div class="pdf-meal-row">' +
-          '<span class="pdf-meal-label">🌙 Dinner</span>' +
-          '<span class="pdf-meal-text">' + d.dinner + '</span>' +
-        '</div>' +
-        '<div class="pdf-meal-row">' +
-          '<span class="pdf-meal-label">🍎 Snacks</span>' +
-          '<span class="pdf-meal-text">' + d.snacks.join(' • ') + '</span>' +
-        '</div>';
-      containerEl.appendChild(dayCard);
-    });
-  }
-;
+  function renderDayTabs(tabsEl, panelsEl, plan) {
+    tabsEl.innerHTML = panelsEl.innerHTML = '';
+    plan.forEach(function (d, i) {
+      var btn = document.createElement('button');
+      btn.className = 'day-tab' + (i === 0 ? ' active' : '');
+      btn.innerHTML =
+        '<span class="tab-day-short">' + d.day.slice(0,3) + '</span>' +
+        '<span class="tab-day-full">'  + d.day + '</span>';
+      btn.setAttribute('role','tab');
+      btn.setAttribute('aria-selected', String(i === 0));
+      btn.onclick = function () {
+        $$('.day-tab').forEach(function (t)  { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+        $$('.day-panel').forEach(function (p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+        document.getElementById('panel-' + i).classList.add('active');
+      };
       tabsEl.appendChild(btn);
 
       var meals = [
@@ -597,7 +586,7 @@
         '</div>';
       panelsEl.appendChild(panel);
     });
-  
+  }
 
   function getChecked(name) {
     return $$('input[name="' + name + '"]:checked').map(function (i) { return i.value.toLowerCase(); });
@@ -743,19 +732,21 @@
   // ══════════════════════════════════════════════════════════
   //  PAGE: RESULT
   // ══════════════════════════════════════════════════════════
-  var resultsCal      = document.getElementById('results-calorie-summary');
-  var resultsPlanBody = document.getElementById('results-plan-body');
+  var resultsCal    = document.getElementById('results-calorie-summary');
+  var resultsTabsEl = document.getElementById('results-day-tabs');
+  var resultsPanels = document.getElementById('results-day-panels');
 
-  if (resultsCal && resultsPlanBody) {
+  if (resultsCal && resultsTabsEl) {
     var latest = load('cp_latest', null);
     if (latest && latest.plan && latest.meta) {
       var m2    = latest.meta;
       var bmr2  = m2.bmr  || mifflinStJeor({ sex: m2.sex, weightKg: m2.weight, heightCm: m2.height, age: m2.age });
       var tdee2 = m2.tdee || bmr2 * m2.activity;
       renderCalorieBox(resultsCal, Object.assign({}, m2, { bmr: bmr2, tdee: tdee2 }));
-      renderPDFStyle(resultsPlanBody, latest.plan, m2);
-
+      renderDayTabs(resultsTabsEl, resultsPanels, latest.plan);
+      var tw = document.getElementById('results-tabs-wrapper');
       var rb = document.getElementById('results-buttons');
+      if (tw) tw.classList.remove('hidden');
       if (rb) rb.classList.remove('hidden');
 
       var savePlanBtn = document.getElementById('save-plan-2');
@@ -1074,156 +1065,5 @@
     }
   }
 
+})();
 
-  // ══════════════════════════════════════════════════════════
-  //  HOMEPAGE ANIMATIONS
-  // ══════════════════════════════════════════════════════════
-
-  // ── 1. Smooth scroll for ALL anchor nav links ──
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var targetId = link.getAttribute('href').slice(1);
-      var target   = document.getElementById(targetId);
-      if (!target) return;
-      e.preventDefault();
-
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Trigger pulse highlight after scroll lands (~600ms)
-      setTimeout(function () {
-        target.classList.add('section-pulse');
-        setTimeout(function () { target.classList.remove('section-pulse'); }, 950);
-      }, 620);
-    });
-  });
-
-  // ── 2. Active nav link highlight on scroll ──
-  (function () {
-    // Collect all sections that have an id
-    var allSections = Array.from(document.querySelectorAll('section[id], div[id].snap-section, div[id].anim-section'));
-    if (!allSections.length) return;
-
-    // Collect all nav links that point to a #section
-    var navLinks = Array.from(document.querySelectorAll('.top-nav a[href^="#"]'));
-
-    function setActiveLink(id) {
-      navLinks.forEach(function (a) {
-        var href = a.getAttribute('href').slice(1);
-        if (href === id) {
-          a.classList.add('nav-active');
-        } else {
-          a.classList.remove('nav-active');
-        }
-      });
-    }
-
-    var navIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          setActiveLink(entry.target.id);
-        }
-      });
-    }, {
-      threshold: 0.35
-    });
-
-    allSections.forEach(function (sec) { navIO.observe(sec); });
-  })();
-
-  // ── 3. Element-level animations (fade, slide, zoom) ──
-  (function () {
-    var animEls = Array.from(document.querySelectorAll('[data-anim]'));
-    if (!animEls.length) return;
-
-    var elemIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('anim-visible');
-          elemIO.unobserve(entry.target); // animate once only
-        }
-      });
-    }, {
-      threshold: 0.15
-    });
-
-    animEls.forEach(function (el) { elemIO.observe(el); });
-      // ══════════════════════════════════════════════════════════
-  //  HOMEPAGE ANIMATIONS
-  // ══════════════════════════════════════════════════════════
-
-  // ── 1. Smooth scroll + section pulse on nav click ──
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var id     = link.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Pulse fires after scroll animation lands (~620ms)
-      setTimeout(function () {
-        target.classList.add('section-pulse');
-        setTimeout(function () {
-          target.classList.remove('section-pulse');
-        }, 950);
-      }, 620);
-    });
-  });
-
-  // ── 2. Active nav highlight while scrolling ──
-  (function () {
-    var sections  = Array.from(document.querySelectorAll('section[id], [id].anim-section'));
-    var navLinks  = Array.from(document.querySelectorAll('nav a[href^="#"], .top-nav a[href^="#"], .navbar a[href^="#"]'));
-    if (!sections.length || !navLinks.length) return;
-
-    function setActive(id) {
-      navLinks.forEach(function (a) {
-        var match = a.getAttribute('href').slice(1) === id;
-        a.classList.toggle('nav-active', match);
-      });
-    }
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    }, { threshold: 0.35 });
-
-    sections.forEach(function (s) { io.observe(s); });
-  })();
-
-  // ── 3. Section entrance animations (.anim-section) ──
-  (function () {
-    var sections = Array.from(document.querySelectorAll('.anim-section'));
-    if (!sections.length) return;
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    sections.forEach(function (s) { io.observe(s); });
-  })();
-
-  // ── 4. Element-level animations ([data-anim]) ──
-  (function () {
-    var els = Array.from(document.querySelectorAll('[data-anim]'));
-    if (!els.length) return;
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('anim-visible');
-          io.unobserve(entry.target); // plays once only
-        }
-      });
-    }, { threshold: 0.15 });
-
-    els.forEach(function (el) { io.observe(el); });
-  })();
-  })();
