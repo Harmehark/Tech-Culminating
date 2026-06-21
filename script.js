@@ -34,6 +34,49 @@
     el._t = setTimeout(function () { el.style.opacity = '0'; }, 3000);
   }
 
+  // ── Scroll reveal animation ──
+  var revealEls = $$('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in-view'); });
+  }
+
+  // ── Header glow on scroll ──
+  var header = $('.site-header');
+  if (header) {
+    function updateHeaderState() {
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    }
+    updateHeaderState();
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+  }
+
+  // ── Subtle hero parallax ──
+  var heroSection = $('.hero');
+  var heroCopy = $('.hero-copy');
+  var heroPhotos = $('.hero-photos');
+  if (heroSection && heroCopy && heroPhotos) {
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      var move = Math.min(y * 0.12, 18);
+      heroCopy.style.transform = 'translateY(' + Math.max(0, move * 0.45) + 'px)';
+      heroPhotos.style.transform = 'translateY(' + Math.max(0, move * 0.25) + 'px)';
+      heroSection.style.setProperty('--parallax', move + 'px');
+    }, { passive: true });
+  }
+
+  // ── Enable snap page feel on the homepage ──
+  document.documentElement.classList.add('snap-page');
+
   // ══════════════════════════════════════════════════════════
   //  AUTH MODAL
   // ══════════════════════════════════════════════════════════
@@ -317,16 +360,18 @@
   // ══════════════════════════════════════════════════════════
   var snapSections = $$('.snap-section');
   var dotsNav      = document.getElementById('snap-dots');
-  if (snapSections.length && dotsNav) {
+  if (snapSections.length) {
     var LABELS = ['Home','Nutrition','Article','FAQ','About'];
-    snapSections.forEach(function (sec, i) {
-      var dot = document.createElement('button');
-      dot.className = 'snap-dot';
-      dot.title     = LABELS[i] || ('Section ' + (i + 1));
-      dot.setAttribute('aria-label', LABELS[i] || ('Section ' + (i + 1)));
-      dot.onclick   = function () { sec.scrollIntoView({ behavior: 'smooth' }); };
-      dotsNav.appendChild(dot);
-    });
+    if (dotsNav) {
+      snapSections.forEach(function (sec, i) {
+        var dot = document.createElement('button');
+        dot.className = 'snap-dot';
+        dot.title     = LABELS[i] || ('Section ' + (i + 1));
+        dot.setAttribute('aria-label', LABELS[i] || ('Section ' + (i + 1)));
+        dot.onclick   = function () { sec.scrollIntoView({ behavior: 'smooth' }); };
+        dotsNav.appendChild(dot);
+      });
+    }
     var dots = $$('.snap-dot');
     var snapIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -338,6 +383,32 @@
     }, { threshold: 0.5 });
     snapSections.forEach(function (s) { snapIO.observe(s); });
   }
+
+  // ── FAQ accordion behavior ──
+  var faqButtons = $$('.faq-question');
+  faqButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      var isOpen = item && item.classList.contains('open');
+      var icon = btn.querySelector('.faq-icon');
+
+      faqButtons.forEach(function (otherBtn) {
+        var otherItem = otherBtn.closest('.faq-item');
+        var otherIcon = otherBtn.querySelector('.faq-icon');
+        if (otherItem && otherItem !== item) {
+          otherItem.classList.remove('open');
+          otherBtn.setAttribute('aria-expanded', 'false');
+          if (otherIcon) otherIcon.textContent = '＋';
+        }
+      });
+
+      if (item) {
+        item.classList.toggle('open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        if (icon) icon.textContent = !isOpen ? '-' : '+';
+      }
+    });
+  });
 
   // ══════════════════════════════════════════════════════════
   //  MEAL PLANNER
