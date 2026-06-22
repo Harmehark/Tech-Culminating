@@ -13,6 +13,10 @@
     catch (e) { return fallback; }
   }
   function clamp(n, lo, hi) { return Math.min(Math.max(n, lo), hi); }
+  function clearLoggedOutData() {
+    localStorage.removeItem('cp_profile');
+    localStorage.removeItem('cp_form_draft');
+  }
 
   // ── Toast ──
   function toast(msg) {
@@ -82,6 +86,8 @@
   // ══════════════════════════════════════════════════════════
   function getUser()  { return load('cp_user', null); }
   function getUsers() { return load('cp_users', []); }
+
+  if (!getUser()) clearLoggedOutData();
 
   function showScreen(id) {
     ['screen-choice','screen-signup','screen-login','screen-profile'].forEach(function (s) {
@@ -277,6 +283,7 @@
     if (logoutBtn) {
       logoutBtn.onclick = function () {
         localStorage.removeItem('cp_user');
+        clearLoggedOutData();
         updateAuthNav();
         toast('👋 You have been logged out.');
         closeModal();
@@ -322,6 +329,7 @@
     if (logoutBtn) logoutBtn.addEventListener('click', function (e) {
       e.preventDefault();
       localStorage.removeItem('cp_user');
+      clearLoggedOutData();
       updateAuthNav();
       toast('👋 You have been logged out.');
     });
@@ -554,6 +562,22 @@
     return d.length ? d : options.slice();
   }
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function shuffled(arr) {
+    return arr.slice().sort(function () { return Math.random() - 0.5; });
+  }
+  function takeFromCycle(basePool, statePool, previous) {
+    var pool = statePool && statePool.length ? statePool : shuffled(basePool);
+    var meal = pool.shift();
+    if (previous && meal === previous && pool.length) {
+      var idx = pool.findIndex(function (x) { return x !== previous; });
+      if (idx >= 0) {
+        var alt = pool.splice(idx, 1)[0];
+        pool.push(meal);
+        meal = alt;
+      }
+    }
+    return { meal: meal, pool: pool };
+  }
 
   function buildDay(age, activity, diet, allergies) {
     var g  = getAgeGroup(age);
@@ -574,10 +598,51 @@
     };
   }
   function buildWeek(age, activity, diet, allergies) {
-    return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-      .map(function (day) {
-        return Object.assign({ day: day }, buildDay(age, activity, diet, allergies));
-      });
+    var g  = getAgeGroup(age);
+    var c  = getActivityChoice(parseFloat(activity));
+    var m  = MEAL_PLANS[g.key][c];
+    var breakfasts = filterMeals(m.breakfasts, diet, allergies);
+    var lunches    = filterMeals(m.lunches,    diet, allergies);
+    var dinners    = filterMeals(m.dinners,    diet, allergies);
+    var snacksPool = filterMeals(m.snacks,     diet, allergies);
+
+    var lunchCycle = shuffled(lunches);
+    var dinnerCycle = shuffled(dinners);
+    var prevLunch = '';
+    var prevDinner = '';
+
+    return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(function (day) {
+      var lunchPick = takeFromCycle(lunches, lunchCycle, prevLunch);
+      lunchCycle = lunchPick.pool;
+      var lunchMeal = lunchPick.meal;
+
+      var dinnerPick = takeFromCycle(dinners, dinnerCycle, prevDinner);
+      dinnerCycle = dinnerPick.pool;
+      var dinnerMeal = dinnerPick.meal;
+
+      if (dinners.length > 1 && dinnerMeal === lunchMeal) {
+        var alt = dinners.find(function (x) { return x !== lunchMeal; });
+        if (alt) dinnerMeal = alt;
+      }
+
+      prevLunch = lunchMeal;
+      prevDinner = dinnerMeal;
+
+      var s1 = pick(snacksPool);
+      var s2Choices = snacksPool.filter(function (s) { return s !== s1; });
+      var s2 = s2Choices.length ? pick(s2Choices) : s1;
+
+      return {
+        day: day,
+        ageGroup: g.label,
+        activityLabel: m.activity,
+        calories: m.calories,
+        breakfast: pick(breakfasts),
+        lunch: lunchMeal,
+        dinner: dinnerMeal,
+        snacks: [s1, s2]
+      };
+    });
   }
 
   var MEAL_COLORS = {
@@ -840,8 +905,18 @@
       var savePlanBtn = document.getElementById('save-plan-2');
       if (savePlanBtn) {
         savePlanBtn.addEventListener('click', function () {
+          var currentUser = getUser();
+          if (!currentUser || !currentUser.email) {
+            toast('⚠️ Sign up or log in to save plans.');
+            openModal('screen-login');
+            return;
+          }
+
+          latest.ownerEmail = String(currentUser.email || '').toLowerCase();
           var saved = load('cp_saved', []);
-          var alreadySaved = saved.find(function (s) { return s.id === latest.id; });
+          var alreadySaved = saved.find(function (s) {
+            return s.id === latest.id && String(s.ownerEmail || '').toLowerCase() === latest.ownerEmail;
+          });
           if (!alreadySaved) {
             saved.unshift(latest);
             save('cp_saved', saved);
@@ -945,19 +1020,33 @@
   if (plansUl) {
     function refreshSaved() {
       plansUl.innerHTML = '';
-      var saved = load('cp_saved', []);
+      var currentUser = getUser();
+      if (!currentUser || !currentUser.email) {
+        plansUl.innerHTML =
+          '<li style="padding:32px;text-align:center;color:#6b7f6b;list-style:none">' +
+          '<div style="font-size:40px;margin-bottom:8px">📭</div>' +
+          '<strong style="display:block;margin-bottom:8px">No plans saved.</strong>' +
+          '<span>Sign up/Log in to save plans.</span></li>';
+        return;
+      }
+
+      var ownerEmail = String(currentUser.email).toLowerCase();
+      var saved = load('cp_saved', []).filter(function (p) {
+        return String((p && p.ownerEmail) || '').toLowerCase() === ownerEmail;
+      });
+
       if (!saved.length) {
         plansUl.innerHTML =
           '<li style="padding:32px;text-align:center;color:#6b7f6b;list-style:none">' +
           '<div style="font-size:40px;margin-bottom:8px">📭</div>' +
-          '<strong style="display:block;margin-bottom:8px">No saved plans yet.</strong>' +
-          // ✅ FIXED
-          '<a href="form.html" class="btn btn-primary" style="display:inline-block;max-width:220px">Create Your First Plan →</a></li>';
+          '<strong style="display:block;margin-bottom:8px">No plans saved.</strong>' +
+          '<span>Create a plan and save it while logged in.</span></li>';
 
         return;
       }
       saved.forEach(function (payload, idx) {
         var meta = payload.meta || {};
+        var pid  = String(payload.id || idx);
         var li   = document.createElement('li');
         li.style.cssText = 'list-style:none;margin-bottom:16px;';
         li.innerHTML =
@@ -975,12 +1064,12 @@
                 '</div>' +
               '</div>' +
               '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                '<button class="btn btn-primary btn-sm view-plan-btn" data-idx="' + idx + '">👁 View</button>' +
-                '<button class="btn btn-ghost  btn-sm dl-plan-btn"   data-idx="' + idx + '">⬇️ PDF</button>' +
-                '<button class="btn btn-ghost  btn-sm del-plan-btn"  data-idx="' + idx + '" style="color:#c62828;">🗑 Delete</button>' +
+                '<button class="btn btn-primary btn-sm view-plan-btn" data-id="' + pid + '">👁 View</button>' +
+                '<button class="btn btn-ghost  btn-sm dl-plan-btn"   data-id="' + pid + '">⬇️ PDF</button>' +
+                '<button class="btn btn-ghost  btn-sm del-plan-btn"  data-id="' + pid + '" style="color:#c62828;">🗑 Delete</button>' +
               '</div>' +
             '</div>' +
-            '<div class="saved-plan-detail hidden" id="saved-detail-' + idx + '" style="margin-top:16px;"></div>' +
+            '<div class="saved-plan-detail hidden" id="saved-detail-' + pid + '" style="margin-top:16px;"></div>' +
           '</div>';
         plansUl.appendChild(li);
       });
@@ -988,10 +1077,13 @@
       // Wire buttons
       $$('.view-plan-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var idx     = parseInt(btn.getAttribute('data-idx'), 10);
-          var saved   = load('cp_saved', []);
-          var payload = saved[idx];
-          var detail  = document.getElementById('saved-detail-' + idx);
+          var id      = btn.getAttribute('data-id');
+          var user    = getUser();
+          var mine    = user && user.email
+            ? load('cp_saved', []).filter(function (p) { return String((p && p.ownerEmail) || '').toLowerCase() === String(user.email).toLowerCase(); })
+            : [];
+          var payload = mine.find(function (p) { return String(p.id) === id; });
+          var detail  = document.getElementById('saved-detail-' + id);
           if (!detail || !payload) return;
           if (!detail.classList.contains('hidden')) {
             detail.classList.add('hidden');
@@ -1014,19 +1106,23 @@
 
       $$('.dl-plan-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var idx   = parseInt(btn.getAttribute('data-idx'), 10);
-          var saved = load('cp_saved', []);
-          downloadPDF(saved[idx]);
+          var id   = btn.getAttribute('data-id');
+          var user = getUser();
+          var mine = user && user.email
+            ? load('cp_saved', []).filter(function (p) { return String((p && p.ownerEmail) || '').toLowerCase() === String(user.email).toLowerCase(); })
+            : [];
+          var payload = mine.find(function (p) { return String(p.id) === id; });
+          if (payload) downloadPDF(payload);
         });
       });
 
       $$('.del-plan-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
           if (!confirm('Delete this saved plan? This cannot be undone.')) return;
-          var idx   = parseInt(btn.getAttribute('data-idx'), 10);
-          var saved = load('cp_saved', []);
-          saved.splice(idx, 1);
-          save('cp_saved', saved);
+          var id = btn.getAttribute('data-id');
+          var allSaved = load('cp_saved', []);
+          var kept = allSaved.filter(function (p) { return String(p.id) !== id; });
+          save('cp_saved', kept);
           toast('🗑 Plan deleted.');
           refreshSaved();
         });
@@ -1039,8 +1135,17 @@
     if (clearAllBtn) {
       clearAllBtn.addEventListener('click', function () {
         if (!confirm('Delete ALL saved plans? This cannot be undone.')) return;
-        localStorage.removeItem('cp_saved');
-        toast('🗑 All plans cleared.');
+        var user = getUser();
+        if (!user || !user.email) {
+          toast('⚠️ Sign up or log in to manage saved plans.');
+          return;
+        }
+        var ownerEmail = String(user.email).toLowerCase();
+        var kept = load('cp_saved', []).filter(function (p) {
+          return String((p && p.ownerEmail) || '').toLowerCase() !== ownerEmail;
+        });
+        save('cp_saved', kept);
+        toast('🗑 Your saved plans were cleared.');
         refreshSaved();
       });
     }
