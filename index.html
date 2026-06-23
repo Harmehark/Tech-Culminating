@@ -304,13 +304,12 @@
 
   <!-- Firebase Authentication and Database Script -->
     <!-- FULLY SELF-CONTAINED FIREBASE AUTH SCRIPT (NO EXTERNAL CONFIG FILE NEEDED) -->
+  <!-- Complete Built-In Authentication Modal Script -->
   <script type="module">
-    // 1. Import Firebase directly from the Google CDN
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    // 2. Your live, verified Firebase configuration credentials
     const firebaseConfig = {
       apiKey: "AIzaSyCDnej33wQp7wB6nGgBVgBsA-gVMRJHCqk", 
       authDomain: "meal-planner-af67e.firebaseapp.com",
@@ -321,11 +320,9 @@
       measurementId: "G-542223235"
     };
 
-    // 3. Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
     const provider = new GoogleAuthProvider();
 
     const liLogin = document.getElementById('li-login-btn');
@@ -337,7 +334,113 @@
     const signupBtn = document.getElementById('nav-signup-btn');
     const logoutBtn = document.getElementById('nav-logout-btn');
 
-    // 4. Monitor User Log In State
+    let isSignUpMode = false;
+
+    // 1. Injects the custom login/signup Modal HTML
+    function createAuthModal() {
+      if (document.getElementById('auth-modal-overlay')) return;
+
+      const modalHTML = `
+        <div id="auth-modal-overlay" class="auth-modal-overlay">
+          <div class="auth-modal-content">
+            <button id="close-modal-btn" class="close-modal-btn">&times;</button>
+            <h2 id="modal-title">Log In</h2>
+            
+            <form id="modal-auth-form">
+              <div class="form-group">
+                <label for="modal-email">Email Address</label>
+                <input type="email" id="modal-email" required placeholder="name@example.com">
+              </div>
+              <div class="form-group">
+                <label for="modal-password">Password</label>
+                <input type="password" id="modal-password" required placeholder="Min 6 characters">
+              </div>
+              <p id="modal-error-msg" class="modal-error-msg"></p>
+              <button type="submit" id="modal-submit-btn">Submit</button>
+            </form>
+
+            <div class="modal-divider">or</div>
+            
+            <button id="modal-google-btn" class="google-btn" style="width: 100%; justify-content: center;">
+              <span class="google-icon-wrapper">
+                <svg class="google-icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.69c-.29 1.5-.11 2.7-.98 3.69v3.06h6.48c3.78-6.01 3.55-6.19 3.55-8.6z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.97-1.08 7.96-2.91l-6.48-3.06c-.9.6-2.06.96-3.48.96-3.23 0-5.96-2.18-6.94-5.12H1.1v3.18C3.08 20.82 7.23 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.06 13.87c25-.7-.39-1.45-.39-2.22s.14-1.52.39-2.22V6.25H1.1C.4 7.64 0 9.4 0 11.65s.4 4.01 1.1 5.4l3.96-3.18z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.18 1.1 7.25l3.96 3.18c.98-2.94 3.71-5.12 6.94-5.12z"/>
+                </svg>
+              </span>
+              <span class="google-btn-text">Sign in with Google</span>
+            </button>
+
+            <p class="modal-switch-text">
+              <span id="modal-switch-prompt">Don't have an account?</span>
+              <a id="modal-switch-link" class="modal-switch-link">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+      const overlay = document.getElementById('auth-modal-overlay');
+      const closeBtn = document.getElementById('close-modal-btn');
+      const switchLink = document.getElementById('modal-switch-link');
+      const form = document.getElementById('modal-auth-form');
+      const googleBtn = document.getElementById('modal-google-btn');
+
+      // Close modal functions
+      closeBtn.addEventListener('click', () => overlay.remove());
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+      });
+
+      // Toggle UI between Log In & Sign Up mode
+      switchLink.addEventListener('click', () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-title').innerText = isSignUpMode ? "Sign Up" : "Log In";
+        document.getElementById('modal-submit-btn').innerText = isSignUpMode ? "Create Account" : "Log In";
+        document.getElementById('modal-switch-prompt').innerText = isSignUpMode ? "Already have an account?" : "Don't have an account?";
+        switchLink.innerText = isSignUpMode ? "Log In" : "Sign Up";
+        document.getElementById('modal-error-msg').innerText = "";
+      });
+
+      // Google Auth inside the modal
+      googleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        signInWithPopup(auth, provider)
+          .then(() => overlay.remove())
+          .catch((err) => {
+            document.getElementById('modal-error-msg').innerText = err.message.replace("Firebase: ", "");
+          });
+      });
+
+      // Form submission for Email/Password
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const email = document.getElementById('modal-email').value;
+        const password = document.getElementById('modal-password').value;
+        const errorMsg = document.getElementById('modal-error-msg');
+        errorMsg.innerText = "";
+
+        try {
+          if (isSignUpMode) {
+            // Register a brand new email account
+            await createUserWithEmailAndPassword(auth, email, password);
+          } else {
+            // Log in with existing email account
+            await signInWithEmailAndPassword(auth, email, password);
+          }
+          overlay.remove();
+        } catch (err) {
+          errorMsg.innerText = "Error: " + err.message.replace("Firebase: ", "");
+        }
+      });
+    }
+
+        // 2. Track Auth State (Hides/Shows navigation elements dynamically)
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User logged in: Show Logout & Profile, Hide Login & Sign Up
@@ -350,7 +453,7 @@
           // Sync user session details securely into Firestore database
           await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
-            name: user.displayName,
+            name: user.displayName || user.email.split('@')[0],
             email: user.email,
             lastLogin: new Date()
           }, { merge: true });
@@ -367,32 +470,40 @@
       }
     });
 
-    // 5. Google Sign-In with event propagation stopped to prevent script conflicts
-    const loginWithGoogle = (e) => {
+    // 3. Event Listeners to Open the Popup Modal
+    const openLoginModal = (e) => {
       e.preventDefault();
-      e.stopPropagation(); // Prevents other scripts from canceling this event
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          console.log("Logged in successfully:", result.user.displayName);
-        })
-        .catch((error) => {
-          console.error("Sign-in failed: ", error.message);
-          alert("Firebase Sign-In Error: " + error.message);
-        });
+      e.stopPropagation();
+      isSignUpMode = false;
+      createAuthModal();
     };
 
-    if (loginBtn) loginBtn.addEventListener('click', loginWithGoogle);
-    if (signupBtn) signupBtn.addEventListener('click', loginWithGoogle);
+    const openSignUpModal = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      isSignUpMode = true;
+      createAuthModal();
+      
+      // Update UI elements to show Sign Up mode by default
+      const switchLink = document.getElementById('modal-switch-link');
+      if (switchLink) {
+        document.getElementById('modal-title').innerText = "Sign Up";
+        document.getElementById('modal-submit-btn').innerText = "Create Account";
+        document.getElementById('modal-switch-prompt').innerText = "Already have an account?";
+        switchLink.innerText = "Log In";
+      }
+    };
 
-    // 6. Handle Logout
+    if (loginBtn) loginBtn.addEventListener('click', openLoginModal);
+    if (signupBtn) signupBtn.addEventListener('click', openSignUpModal);
+
+    // 4. Handle Sign Out
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         signOut(auth)
-          .then(() => {
-            console.log("Logged out successfully");
-          })
+          .then(() => console.log("Logged out successfully"))
           .catch((error) => console.error("Sign-out failed: ", error.message));
       });
     }

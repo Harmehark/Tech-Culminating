@@ -1310,3 +1310,146 @@ html.snap-page .snap-section.in-view .stagger-child:nth-child(8) { animation-del
   }
   .nav-auth-link--primary { background: transparent !important; }
 }
+/* --- Built-In Auth Modal CSS --- */
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.auth-modal-content {
+  background-color: #1a1f26;
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-modal-btn:hover {
+  color: #fff;
+}
+
+.auth-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.form-group input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #0d1117;
+  color: white;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4285F4;
+}
+
+#modal-submit-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background-color: #238636;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+#modal-submit-btn:hover {
+  background-color: #2ea44f;
+}
+
+.modal-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.modal-divider::before,
+.modal-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-divider:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.modal-divider:not(:empty)::after {
+  margin-left: .5em;
+}
+
+.modal-switch-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.modal-switch-link {
+  color: #58a6ff;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modal-switch-link:hover {
+  text-decoration: underline;
+}
+
+.modal-error-msg {
+  color: #f85149;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  min-height: 20px;
+}
