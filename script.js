@@ -501,6 +501,33 @@
     catch (err) {}
   }
 
+  function getGuestSessionId() {
+    var key = 'td_guest_session_id';
+    var id = safeSessionGet(key);
+    if (id) return id;
+    id = 'guest-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    safeSessionSet(key, id);
+    return id;
+  }
+
+  function getVisibleLatestPlan() {
+    var latest = load('cp_latest', null);
+    if (!latest || !latest.plan || !latest.meta) return null;
+
+    var user = getUser();
+    var ownerEmail = String((latest && latest.ownerEmail) || '').toLowerCase();
+
+    if (user && user.email) {
+      return ownerEmail === String(user.email).toLowerCase() ? latest : null;
+    }
+
+    var guestId = getGuestSessionId();
+    var planGuestId = String((latest && latest.guestSessionId) || '');
+    if (!ownerEmail && planGuestId && planGuestId === guestId) return latest;
+
+    return null;
+  }
+
   var hasShownSessionPrompt = safeSessionGet('td_auth_prompt_shown') === '1';
   if (!getUser() && !hasShownSessionPrompt) {
     safeSessionSet('td_auth_prompt_shown', '1');
@@ -1226,8 +1253,15 @@
           throw new Error('Could not build meal plan from current inputs.');
         }
 
+        var currentUser = getUser();
+        var ownerEmail = currentUser && currentUser.email
+          ? String(currentUser.email).toLowerCase()
+          : '';
+
         var payload = {
           id:   Date.now().toString(),
+          ownerEmail: ownerEmail,
+          guestSessionId: ownerEmail ? '' : getGuestSessionId(),
           meta: {
             name: name, age: age, sex: sex, height: height, weight: weight,
             activity: activity, diet: diet, goal: goal, allergies: allergies,
@@ -1279,7 +1313,7 @@
   var resultsPanels = document.getElementById('results-day-panels');
 
   if (resultsCal && resultsTabsEl) {
-    var latest = load('cp_latest', null);
+    var latest = getVisibleLatestPlan();
     if (latest && latest.plan && latest.meta) {
       var m2    = latest.meta;
       var bmr2  = m2.bmr  || mifflinStJeor({ sex: m2.sex, weightKg: m2.weight, heightCm: m2.height, age: m2.age });
@@ -1332,7 +1366,7 @@
   // ══════════════════════════════════════════════════════════
   var altGrid = document.getElementById('alt-grid');
   if (altGrid) {
-    var latestAlt    = load('cp_latest', null);
+    var latestAlt    = getVisibleLatestPlan();
     var allergiesAlt = (latestAlt && latestAlt.meta && latestAlt.meta.allergies
       ? latestAlt.meta.allergies : []).map(function (a) { return a.toLowerCase().trim(); });
 
