@@ -1177,8 +1177,13 @@
       });
     }
 
-    plannerForm.addEventListener('submit', async function (e) {
+    var submitBtn = plannerForm.querySelector('button[type="submit"]');
+    var isSubmittingPlan = false;
+
+    plannerForm.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      if (isSubmittingPlan) return;
 
       var ageEl      = document.getElementById('age');
       var sexEl      = document.getElementById('sex');
@@ -1194,52 +1199,75 @@
         return;
       }
 
-      var name      = nameEl  ? nameEl.value.trim() : '';
-      var age       = clamp(parseInt(ageEl.value, 10), 9, 100);
-      var sex       = sexEl.value || 'Female';
-      var height    = clamp(parseInt(heightEl.value, 10), 120, 230);
-      var weight    = clamp(parseFloat(weightEl.value), 30, 250);
-      var activity  = parseFloat(activityEl.value || '1.2');
-      var diet      = dietEl  ? (dietEl.value  || 'none')     : 'none';
-      var goal      = goalsEl ? (goalsEl.value || 'maintain') : 'maintain';
-      var allergies = getChecked('allergies');
+      isSubmittingPlan = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Generating Plan...';
+      }
 
-      var bmr      = mifflinStJeor({ sex: sex, weightKg: weight, heightCm: height, age: age });
-      var tdee     = bmr * activity;
-      var plan     = buildWeek(age, activity, diet, allergies);
-      var calories = applyGoal(tdee, goal);
+      try {
 
-      var payload = {
-        id:   Date.now().toString(),
-        meta: {
-          name: name, age: age, sex: sex, height: height, weight: weight,
-          activity: activity, diet: diet, goal: goal, allergies: allergies,
-          ageGroup: plan[0].ageGroup, activityLabel: plan[0].activityLabel,
-          calories: calories, bmr: bmr, tdee: tdee,
-          created: new Date().toISOString()
-        },
-        plan: plan
-      };
+        var name      = nameEl  ? nameEl.value.trim() : '';
+        var age       = clamp(parseInt(ageEl.value, 10), 9, 100);
+        var sex       = sexEl.value || 'Female';
+        var height    = clamp(parseInt(heightEl.value, 10), 120, 230);
+        var weight    = clamp(parseFloat(weightEl.value), 30, 250);
+        var activity  = parseFloat(activityEl.value || '1.2');
+        var diet      = dietEl  ? (dietEl.value  || 'none')     : 'none';
+        var goal      = goalsEl ? (goalsEl.value || 'maintain') : 'maintain';
+        var allergies = getChecked('allergies');
 
-      save('cp_latest', payload);
-      if (getUser()) {
-        save('cp_profile', {
+        var bmr      = mifflinStJeor({ sex: sex, weightKg: weight, heightCm: height, age: age });
+        var tdee     = bmr * activity;
+        var plan     = buildWeek(age, activity, diet, allergies);
+        var calories = applyGoal(tdee, goal);
+
+        if (!plan.length) {
+          throw new Error('Could not build meal plan from current inputs.');
+        }
+
+        var payload = {
+          id:   Date.now().toString(),
+          meta: {
+            name: name, age: age, sex: sex, height: height, weight: weight,
+            activity: activity, diet: diet, goal: goal, allergies: allergies,
+            ageGroup: plan[0].ageGroup, activityLabel: plan[0].activityLabel,
+            calories: calories, bmr: bmr, tdee: tdee,
+            created: new Date().toISOString()
+          },
+          plan: plan
+        };
+
+        save('cp_latest', payload);
+        if (getUser()) {
+          save('cp_profile', {
+            name: name, age: age, sex: sex, height: height,
+            weight: weight, activity: activity, diet: diet, allergies: allergies
+          });
+        }
+        save('cp_form_draft', {
           name: name, age: age, sex: sex, height: height,
-          weight: weight, activity: activity, diet: diet, allergies: allergies
+          weight: weight, activity: activity, diet: diet,
+          goals: goal, allergies: allergies
         });
-      }
-      save('cp_form_draft', {
-        name: name, age: age, sex: sex, height: height,
-        weight: weight, activity: activity, diet: diet,
-        goals: goal, allergies: allergies
-      });
 
-      // If the Firebase form module is loaded, persist this plan to Firestore.
-      if (typeof window.firebaseSaveGeneratedPlan === 'function') {
-        await window.firebaseSaveGeneratedPlan(payload);
-      }
+        // Save to Firebase in the background. Form navigation should not be blocked.
+        if (typeof window.firebaseSaveGeneratedPlan === 'function') {
+          Promise.resolve(window.firebaseSaveGeneratedPlan(payload)).catch(function (err) {
+            console.warn('Background Firebase save failed:', err && err.message ? err.message : err);
+          });
+        }
 
-      window.location.href = 'result.html';
+        window.location.href = 'result.html';
+      } catch (err) {
+        isSubmittingPlan = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🍽️ Generate Meal Plan →';
+        }
+        console.error('Meal plan generation failed:', err);
+        toast('⚠️ Something went wrong while generating your plan. Please try again.');
+      }
     });
   }
 
