@@ -295,19 +295,70 @@
 
   </main>
 
-  <script src="script.js" defer></script>
-    <!-- Firebase Authentication and Database Script -->
+      <section id="about" class="about-section snap-section" aria-labelledby="about-title">
+      <div class="about-top">
+        <div class="container about-top-inner">
+          <div class="about-col about-col--brand reveal">
+            <div class="about-brand-icon">🥗</div>
+            <div class="about-brand-name">Personalized Calorie<br>Intake Meal Planner</div>
+            <p class="about-brand-tagline">Empowering healthy choices,<br>one meal at a time.</p>
+          </div>
+          <div class="about-col reveal">
+            <h4 class="about-col-title">Project Info</h4>
+            <ul class="about-col-list">
+              <li><span class="about-col-key">Creator:</span> Harmehar Kaur</li>
+              <li><span class="about-col-key">Grade:</span> Grade 9</li>
+              <li><span class="about-col-key">Course:</span> Digital Technology</li>
+              <li><span class="about-col-key">Year:</span> 2026</li>
+              <li><span class="about-col-key">Teacher:</span> Mr. MᶜRae</li>
+              <li><span class="about-col-key">Contact:</span> harmehark12@gmail.com</li>
+            </ul>
+          </div>
+          <div class="about-col reveal">
+            <h4 class="about-col-title">Navigate</h4>
+            <ul class="about-col-list">
+              <li><a href="#home">Home</a></li>
+              <li><a href="form.html">Create Meal Plan</a></li>
+              <li><a href="#nutrition">Nutrition Guide</a></li>
+              <li><a href="#article">Health Article</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="saved.html">Saved Plans</a></li>
+              <li><a href="profile.html">Profile</a></li>
+            </ul>
+          </div>
+          <div class="about-col reveal">
+            <h4 class="about-col-title">Purpose</h4>
+            <p class="about-col-text">This tool helps users create healthy, personalized 7-day meal plans tailored to their body, lifestyle, and dietary needs. It is not a substitute for professional medical advice.</p>
+            <div class="about-links">
+              <a href="#" class="about-link-btn">▶ Demo</a>
+              <a href="#" class="about-link-btn">💻 GitHub</a>
+              <a href="#" class="about-link-btn">✉ Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-bottom reveal">
+        <div class="container about-bottom-inner">
+          <p>© 2025 Personalized Calorie Intake Meal Planner. All rights reserved.</p>
+          <nav aria-label="Footer legal">
+            <a href="#home">Home</a>
+            <a href="#faq">FAQ</a>
+            <a href="#about">About</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Firebase Authentication and Database Script -->
   <script type="module">
-    // 1. Import your shared Firebase config
     import { auth, db } from './firebase-config.js';
-    
-    // Import required Firebase modular SDK methods
     import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     const provider = new GoogleAuthProvider();
 
-    // Get the HTML Elements for your Auth menu links
     const liLogin = document.getElementById('li-login-btn');
     const liSignup = document.getElementById('li-signup-btn');
     const liLogout = document.getElementById('li-logout-btn');
@@ -317,7 +368,7 @@
     const signupBtn = document.getElementById('nav-signup-btn');
     const logoutBtn = document.getElementById('nav-logout-btn');
 
-    // 2. Track Auth State (Dynamic UI toggling)
+    // 1. Monitor User Log In State
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User logged in: Show Logout & Profile, Hide Login & Sign Up
@@ -326,9 +377,8 @@
         liLogout.style.display = 'list-item';
         liProfile.style.display = 'list-item';
 
-        // 3. Save the user's account details to Firestore under their UID
         try {
-          // 'merge: true' keeps their saved meal plans safe when logging back in
+          // Merge user session details securely into Firestore
           await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             name: user.displayName,
@@ -348,27 +398,34 @@
       }
     });
 
-    // 4. Handle Google Sign-In Popup
+    // 2. Google Sign-In with event propagation stopped to prevent script conflicts
     const loginWithGoogle = (e) => {
       e.preventDefault();
+      e.stopPropagation(); // Prevents other scripts from canceling this event
       signInWithPopup(auth, provider)
-        .catch((error) => console.error("Sign-in failed: ", error.message));
+        .then((result) => {
+          console.log("Logged in successfully:", result.user.displayName);
+        })
+        .catch((error) => {
+          console.error("Sign-in failed: ", error.message);
+        });
     };
 
     if (loginBtn) loginBtn.addEventListener('click', loginWithGoogle);
     if (signupBtn) signupBtn.addEventListener('click', loginWithGoogle);
 
-    // 5. Handle Sign Out
+    // 3. Handle Logout
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         signOut(auth)
           .catch((error) => console.error("Sign-out failed: ", error.message));
       });
     }
   </script>
 
-  <!-- Keep your existing script import below the Firebase code -->
+  <!-- Keep your existing script import strictly below the Firebase code -->
   <script src="script.js" defer></script>
 </body>
 </html>
