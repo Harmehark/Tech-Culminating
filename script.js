@@ -122,6 +122,108 @@
   }
   function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
 
+  var firebaseAuthBridge = null;
+
+  async function loadFirebaseAuthBridge() {
+    if (firebaseAuthBridge) return firebaseAuthBridge;
+    try {
+      var imports = await Promise.all([
+        import('./firebase-config.js'),
+        import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js')
+      ]);
+      var cfg = imports[0];
+      var authFns = imports[1];
+      firebaseAuthBridge = {
+        auth: cfg.auth,
+        GoogleAuthProvider: authFns.GoogleAuthProvider,
+        createUserWithEmailAndPassword: authFns.createUserWithEmailAndPassword,
+        signInWithEmailAndPassword: authFns.signInWithEmailAndPassword,
+        signInWithPopup: authFns.signInWithPopup,
+        signOut: authFns.signOut,
+        onAuthStateChanged: authFns.onAuthStateChanged
+      };
+      return firebaseAuthBridge;
+    } catch (err) {
+      console.warn('Firebase Auth bridge unavailable:', err && err.message ? err.message : err);
+      return null;
+    }
+  }
+
+  function normalizeFirebaseUser(user, fallbackName) {
+    if (!user) return null;
+    return {
+      name: (user.displayName || fallbackName || 'User').trim(),
+      email: String(user.email || '').toLowerCase(),
+      created: user.metadata && user.metadata.creationTime
+        ? new Date(user.metadata.creationTime).toISOString()
+        : new Date().toISOString(),
+      uid: user.uid,
+      provider: 'firebase'
+    };
+  }
+
+  function friendlyAuthError(error) {
+    var code = (error && error.code ? String(error.code) : '').toLowerCase();
+    if (code.includes('popup-closed-by-user')) return '⚠️ Google sign-in popup was closed. Please try again.';
+    if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found')) {
+      return '⚠️ Incorrect email or password. Please try again.';
+    }
+    if (code.includes('email-already-in-use')) return '⚠️ This email is already registered. Try logging in.';
+    if (code.includes('weak-password')) return '⚠️ Password must be at least 6 characters.';
+    if (code.includes('operation-not-allowed')) return '⚠️ This auth method is not enabled in Firebase Console yet.';
+    return '⚠️ ' + ((error && error.message) ? error.message : 'Authentication failed.');
+  }
+
+  async function firebaseGoogleSignIn(errorTargetId) {
+    var errEl = document.getElementById(errorTargetId);
+    if (errEl) errEl.style.display = 'none';
+    var bridge = await loadFirebaseAuthBridge();
+    if (!bridge) {
+      if (errEl) showErr(errEl, '⚠️ Google sign-in is unavailable right now.');
+      return;
+    }
+    try {
+      var provider = new bridge.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      var cred = await bridge.signInWithPopup(bridge.auth, provider);
+      var normalized = normalizeFirebaseUser(cred.user);
+      if (!normalized || !normalized.email) throw new Error('Google account does not have an email address.');
+      save('cp_user', normalized);
+      updateAuthNav();
+      toast('✅ Signed in with Google!');
+      closeModal();
+    } catch (error) {
+      if (errEl) showErr(errEl, friendlyAuthError(error));
+    }
+  }
+
+  async function initFirebaseAuthSync() {
+    var bridge = await loadFirebaseAuthBridge();
+    if (!bridge || !bridge.onAuthStateChanged) return;
+    bridge.onAuthStateChanged(bridge.auth, function (user) {
+      if (user) {
+        save('cp_user', normalizeFirebaseUser(user));
+      } else {
+        var localUser = getUser();
+        if (localUser && localUser.provider === 'firebase') {
+          localStorage.removeItem('cp_user');
+          clearLoggedOutData();
+        }
+      }
+      updateAuthNav();
+    });
+  }
+
+  async function signOutFirebaseIfNeeded() {
+    var bridge = await loadFirebaseAuthBridge();
+    if (!bridge || !bridge.auth || !bridge.signOut) return;
+    if (!bridge.auth.currentUser) return;
+    try { await bridge.signOut(bridge.auth); }
+    catch (err) {
+      console.warn('Firebase sign out failed:', err && err.message ? err.message : err);
+    }
+  }
+
   function openModal(screen) {
     var old = document.getElementById('auth-modal');
     if (old) old.remove();
@@ -174,6 +276,7 @@
       '<div id="su-err" style="display:none;background:#fdecea;border:1px solid #f5c6c6;' +
         'color:#c62828;border-radius:8px;padding:9px 12px;font-size:13px;margin-bottom:12px"></div>' +
       '<button id="btn-do-signup" style="' + btnStyle('#2e7d32','#fff') + ';margin-bottom:14px" type="button">Create Account →</button>' +
+      '<button id="btn-google-signup" style="' + btnStyle('#fff','#1a2e1a') + 'border:1.5px solid #d0e8d0;margin-bottom:14px" type="button">🔵 Sign Up with Google</button>' +
       '<p style="text-align:center;font-size:13px;color:#6b7f6b;margin:0">Already have an account? ' +
         '<button id="btn-to-login" style="' + linkBtnStyle() + '" type="button">Log in</button></p>';
     box.appendChild(ss);
@@ -189,6 +292,7 @@
       '<div id="li-err" style="display:none;background:#fdecea;border:1px solid #f5c6c6;' +
         'color:#c62828;border-radius:8px;padding:9px 12px;font-size:13px;margin-bottom:12px"></div>' +
       '<button id="btn-do-login" style="' + btnStyle('#2e7d32','#fff') + ';margin-bottom:14px" type="button">Log In →</button>' +
+      '<button id="btn-google-login" style="' + btnStyle('#fff','#1a2e1a') + 'border:1.5px solid #d0e8d0;margin-bottom:14px" type="button">🔵 Log In with Google</button>' +
       '<p style="text-align:center;font-size:13px;color:#6b7f6b;margin:0">No account yet? ' +
         '<button id="btn-to-signup" style="' + linkBtnStyle() + '" type="button">Sign up</button></p>';
     box.appendChild(sl);
@@ -239,7 +343,7 @@
     document.getElementById('btn-to-login').onclick  = function () { showScreen('screen-login');  };
     document.getElementById('btn-to-signup').onclick = function () { showScreen('screen-signup'); };
 
-    document.getElementById('btn-do-signup').onclick = function () {
+    document.getElementById('btn-do-signup').onclick = async function () {
       var name  = document.getElementById('su-name').value.trim();
       var email = document.getElementById('su-email').value.trim().toLowerCase();
       var pass  = document.getElementById('su-password').value;
@@ -248,6 +352,23 @@
       if (!name)                          { showErr(err, '⚠️ Please enter your full name.'); return; }
       if (!email || !email.includes('@')) { showErr(err, '⚠️ Please enter a valid email address.'); return; }
       if (pass.length < 6)                { showErr(err, '⚠️ Password must be at least 6 characters.'); return; }
+
+      var bridge = await loadFirebaseAuthBridge();
+      if (bridge && bridge.createUserWithEmailAndPassword) {
+        try {
+          var cred = await bridge.createUserWithEmailAndPassword(bridge.auth, email, pass);
+          var authUser = normalizeFirebaseUser(cred.user, name);
+          save('cp_user', authUser);
+          updateAuthNav();
+          toast('✅ Account created! Welcome, ' + authUser.name + '!');
+          closeModal();
+          return;
+        } catch (error) {
+          showErr(err, friendlyAuthError(error));
+          return;
+        }
+      }
+
       var users = getUsers();
       if (users.find(function (u) { return u.email === email; })) {
         showErr(err, '⚠️ An account with this email already exists. Try logging in.'); return;
@@ -262,13 +383,35 @@
       closeModal();
     };
 
-    document.getElementById('btn-do-login').onclick = function () {
+    var googleSignUpBtn = document.getElementById('btn-google-signup');
+    if (googleSignUpBtn) {
+      googleSignUpBtn.onclick = function () { firebaseGoogleSignIn('su-err'); };
+    }
+
+    document.getElementById('btn-do-login').onclick = async function () {
       var email = document.getElementById('li-email').value.trim().toLowerCase();
       var pass  = document.getElementById('li-password').value;
       var err   = document.getElementById('li-err');
       err.style.display = 'none';
       if (!email) { showErr(err, '⚠️ Please enter your email.'); return; }
       if (!pass)  { showErr(err, '⚠️ Please enter your password.'); return; }
+
+      var bridge = await loadFirebaseAuthBridge();
+      if (bridge && bridge.signInWithEmailAndPassword) {
+        try {
+          var cred = await bridge.signInWithEmailAndPassword(bridge.auth, email, pass);
+          var authUser = normalizeFirebaseUser(cred.user);
+          save('cp_user', authUser);
+          updateAuthNav();
+          toast('✅ Welcome back, ' + authUser.name + '!');
+          closeModal();
+          return;
+        } catch (error) {
+          showErr(err, friendlyAuthError(error));
+          return;
+        }
+      }
+
       var users = getUsers();
       var found = users.find(function (u) { return u.email === email && u.password === pass; });
       if (!found) { showErr(err, '⚠️ Incorrect email or password. Please try again.'); return; }
@@ -279,9 +422,15 @@
       closeModal();
     };
 
+    var googleLoginBtn = document.getElementById('btn-google-login');
+    if (googleLoginBtn) {
+      googleLoginBtn.onclick = function () { firebaseGoogleSignIn('li-err'); };
+    }
+
     var logoutBtn = document.getElementById('btn-do-logout');
     if (logoutBtn) {
-      logoutBtn.onclick = function () {
+      logoutBtn.onclick = async function () {
+        await signOutFirebaseIfNeeded();
         localStorage.removeItem('cp_user');
         clearLoggedOutData();
         updateAuthNav();
@@ -326,8 +475,9 @@
     var profileBtn = document.getElementById('nav-profile-btn');
     if (loginBtn)  loginBtn.addEventListener('click',  function (e) { e.preventDefault(); openModal('screen-login');  });
     if (signupBtn) signupBtn.addEventListener('click', function (e) { e.preventDefault(); openModal('screen-signup'); });
-    if (logoutBtn) logoutBtn.addEventListener('click', function (e) {
+    if (logoutBtn) logoutBtn.addEventListener('click', async function (e) {
       e.preventDefault();
+      await signOutFirebaseIfNeeded();
       localStorage.removeItem('cp_user');
       clearLoggedOutData();
       updateAuthNav();
@@ -340,9 +490,12 @@
   }
   wireNavAuth();
   updateAuthNav();
+  initFirebaseAuthSync();
 
-  if (!load('cp_modal_shown', false)) {
-    setTimeout(function () { openModal('screen-choice'); }, 900);
+  var hasShownSessionPrompt = sessionStorage.getItem('td_auth_prompt_shown') === '1';
+  if (!getUser() && !hasShownSessionPrompt) {
+    sessionStorage.setItem('td_auth_prompt_shown', '1');
+    setTimeout(function () { openModal('screen-signup'); }, 700);
   }
 
   // ── Mobile nav ──
