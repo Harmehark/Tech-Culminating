@@ -51,6 +51,7 @@ h1,h2,h3,h4 { line-height: 1.25; margin: 0 0 0.5em; color: var(--text); }
 p  { margin: 0 0 0.75em; }
 ul { padding-left: 1.4em; }
 
+/* Ambient decorative glows for landing-page depth. */
 .page-glow {
   position: fixed;
   width: 320px;

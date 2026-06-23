@@ -3,6 +3,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
+// Central Firebase setup used by all auth/database features.
 // Your live, registered Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCDnej33wQp7wB6nGgBVgBsA-gVMRJHCqk", 
@@ -17,6 +18,7 @@ const firebaseConfig = {
 // Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
+// Export singleton service instances for imports in other modules.
 // Export the initialized services for your HTML pages
 export const auth = getAuth(app);
 export const db = getFirestore(app);

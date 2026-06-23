@@ -6,6 +6,7 @@ import {
   serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
+// Tracks the currently authenticated Firebase user for plan ownership.
 let currentUser = null;
 
 onAuthStateChanged(auth, (user) => {
@@ -19,6 +20,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function serializePlanText(planDays) {
+  // Converts structured daily plan data into readable text for quick previews/search.
   if (!Array.isArray(planDays)) return '';
   return planDays.map((day) => {
     const snacks = Array.isArray(day.snacks) ? day.snacks.join(' • ') : String(day.snacks || '');
@@ -33,6 +35,7 @@ function serializePlanText(planDays) {
 }
 
 async function saveGeneratedPlan(payload) {
+  // Saves a generated plan under users/{uid}/mealPlans when a user is logged in.
   if (!payload || !payload.meta || !payload.plan) return false;
 
   if (!currentUser) {

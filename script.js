@@ -4,6 +4,7 @@
 (function () {
   'use strict';
 
+  // Small DOM/query helpers and local persistence utilities used across pages.
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
@@ -511,6 +512,7 @@
   }
 
   function getVisibleLatestPlan() {
+    // Prevents showing another user's latest plan on shared devices.
     var latest = load('cp_latest', null);
     if (!latest || !latest.plan || !latest.meta) return null;
 
