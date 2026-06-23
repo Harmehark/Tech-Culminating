@@ -492,9 +492,18 @@
   updateAuthNav();
   initFirebaseAuthSync();
 
-  var hasShownSessionPrompt = sessionStorage.getItem('td_auth_prompt_shown') === '1';
+  function safeSessionGet(key) {
+    try { return sessionStorage.getItem(key); }
+    catch (err) { return null; }
+  }
+  function safeSessionSet(key, value) {
+    try { sessionStorage.setItem(key, value); }
+    catch (err) {}
+  }
+
+  var hasShownSessionPrompt = safeSessionGet('td_auth_prompt_shown') === '1';
   if (!getUser() && !hasShownSessionPrompt) {
-    sessionStorage.setItem('td_auth_prompt_shown', '1');
+    safeSessionSet('td_auth_prompt_shown', '1');
     setTimeout(function () { openModal('screen-signup'); }, 700);
   }
 
@@ -547,27 +556,43 @@
 
   // ── FAQ accordion behavior ──
   var faqButtons = $$('.faq-question');
+  var faqItems = $$('.faq-item');
+  function closeFaqItem(item) {
+    if (!item) return;
+    var btn = item.querySelector('.faq-question');
+    var icon = item.querySelector('.faq-icon');
+    var answer = item.querySelector('.faq-answer');
+    item.classList.remove('open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    if (icon) icon.textContent = '＋';
+    if (answer) answer.style.maxHeight = '0px';
+  }
+  function openFaqItem(item) {
+    if (!item) return;
+    var btn = item.querySelector('.faq-question');
+    var icon = item.querySelector('.faq-icon');
+    var answer = item.querySelector('.faq-answer');
+    item.classList.add('open');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    if (icon) icon.textContent = '-';
+    if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
   faqButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
       var item = btn.closest('.faq-item');
       var isOpen = item && item.classList.contains('open');
-      var icon = btn.querySelector('.faq-icon');
-
-      faqButtons.forEach(function (otherBtn) {
-        var otherItem = otherBtn.closest('.faq-item');
-        var otherIcon = otherBtn.querySelector('.faq-icon');
-        if (otherItem && otherItem !== item) {
-          otherItem.classList.remove('open');
-          otherBtn.setAttribute('aria-expanded', 'false');
-          if (otherIcon) otherIcon.textContent = '＋';
-        }
+      faqItems.forEach(function (otherItem) {
+        if (otherItem !== item) closeFaqItem(otherItem);
       });
-
-      if (item) {
-        item.classList.toggle('open', !isOpen);
-        btn.setAttribute('aria-expanded', String(!isOpen));
-        if (icon) icon.textContent = !isOpen ? '-' : '+';
-      }
+      if (isOpen) closeFaqItem(item);
+      else openFaqItem(item);
+    });
+  });
+  window.addEventListener('resize', function () {
+    faqItems.forEach(function (item) {
+      if (!item.classList.contains('open')) return;
+      var answer = item.querySelector('.faq-answer');
+      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
     });
   });
 
@@ -703,6 +728,28 @@
     'Stuffed bell peppers with beans and rice'
   ];
 
+  var EXTRA_VEG_BREAKFASTS = [
+    'Spinach mushroom omelet with whole grain toast',
+    'Overnight oats with chia seeds and berries',
+    'Cottage cheese bowl with pineapple and flaxseed',
+    'Peanut butter banana overnight oats',
+    'Greek yogurt bowl with walnuts and honey',
+    'Vegetable upma with side fruit',
+    'Whole grain toast with ricotta and sliced peaches',
+    'Breakfast quinoa bowl with nuts and apple'
+  ];
+
+  var EXTRA_VEG_SNACKS = [
+    'Roasted chickpeas',
+    'Apple with almond butter',
+    'Yogurt with pumpkin seeds',
+    'Cucumber sticks with tzatziki',
+    'Dates with walnuts',
+    'Fruit chaat bowl',
+    'Air-popped popcorn with herbs',
+    'Whole grain toast with avocado'
+  ];
+
   var EXTRA_VEGAN_LUNCHES = [
     'Quinoa chickpea salad bowl',
     'Vegan burrito bowl with black beans',
@@ -721,6 +768,72 @@
     'Vegan chili with cornbread',
     'Mushroom tofu tacos with salsa',
     'Roasted vegetable quinoa bowl'
+  ];
+
+  var EXTRA_VEGAN_BREAKFASTS = [
+    'Tofu scramble with spinach and tomato',
+    'Overnight oats with almond milk and berries',
+    'Chia pudding with mango and coconut flakes',
+    'Vegan banana oat pancakes',
+    'Peanut butter toast with banana and hemp seeds',
+    'Smoothie bowl with oats and mixed fruit',
+    'Avocado toast with roasted chickpeas',
+    'Quinoa porridge with dates and cinnamon'
+  ];
+
+  var EXTRA_VEGAN_SNACKS = [
+    'Edamame with sea salt',
+    'Carrot sticks with hummus',
+    'Banana with peanut butter',
+    'Trail mix with seeds and raisins',
+    'Roasted makhana with spices',
+    'Orange slices and sunflower seeds',
+    'Apple cinnamon oats cup',
+    'Guacamole with veggie sticks'
+  ];
+
+  var EXTRA_NONVEG_BREAKFASTS = [
+    'Turkey bacon egg wrap with spinach',
+    'Smoked salmon bagel with cream cheese',
+    'Chicken sausage breakfast skillet',
+    'Egg white omelet with turkey slices',
+    'Shakshuka with whole grain toast',
+    'Breakfast burrito with chicken and peppers',
+    'Savory oats with poached egg and turkey',
+    'Cottage cheese toast with smoked salmon'
+  ];
+
+  var EXTRA_NONVEG_LUNCHES = [
+    'Grilled chicken pesto pasta salad',
+    'Beef and quinoa power bowl',
+    'Turkey chili with brown rice',
+    'Salmon poke bowl with edamame',
+    'Chicken shawarma wrap with salad',
+    'Shrimp rice noodle bowl',
+    'Tuna and sweet corn whole grain sandwich',
+    'Lean beef fajita bowl'
+  ];
+
+  var EXTRA_NONVEG_DINNERS = [
+    'Lemon herb baked salmon with couscous',
+    'Chicken tikka with brown rice and salad',
+    'Turkey stir-fry with soba noodles',
+    'Beef and vegetable stew with potatoes',
+    'Garlic shrimp with quinoa and broccoli',
+    'Chicken kebabs with roasted vegetables',
+    'Grilled fish tacos with cabbage slaw',
+    'Turkey mince stuffed peppers'
+  ];
+
+  var EXTRA_NONVEG_SNACKS = [
+    'Boiled eggs with pepper',
+    'Turkey slices with cucumber',
+    'Tuna crackers',
+    'Greek yogurt with berries',
+    'Chicken salad lettuce cups',
+    'Cottage cheese with fruit',
+    'Protein smoothie with milk',
+    'Cheese cubes with grapes'
   ];
 
   function matchesDiet(text, pref) {
@@ -819,35 +932,46 @@
     var c  = getActivityChoice(parseFloat(activity));
     var m  = MEAL_PLANS[g.key][c];
 
+    var breakfastBase = m.breakfasts.slice();
     var lunchBase = m.lunches.slice();
     var dinnerBase = m.dinners.slice();
+    var snackBase = m.snacks.slice();
 
     if (diet === 'vegetarian') {
+      breakfastBase = breakfastBase.concat(EXTRA_VEG_BREAKFASTS);
       lunchBase = lunchBase.concat(EXTRA_VEG_LUNCHES);
       dinnerBase = dinnerBase.concat(EXTRA_VEG_DINNERS);
+      snackBase = snackBase.concat(EXTRA_VEG_SNACKS);
     }
     if (diet === 'vegan') {
+      breakfastBase = breakfastBase.concat(EXTRA_VEGAN_BREAKFASTS);
       lunchBase = lunchBase.concat(EXTRA_VEGAN_LUNCHES);
       dinnerBase = dinnerBase.concat(EXTRA_VEGAN_DINNERS);
+      snackBase = snackBase.concat(EXTRA_VEGAN_SNACKS);
+    }
+    if (diet === 'none' || diet === 'non-vegetarian') {
+      breakfastBase = breakfastBase.concat(EXTRA_NONVEG_BREAKFASTS);
+      lunchBase = lunchBase.concat(EXTRA_NONVEG_LUNCHES);
+      dinnerBase = dinnerBase.concat(EXTRA_NONVEG_DINNERS);
+      snackBase = snackBase.concat(EXTRA_NONVEG_SNACKS);
     }
 
-    var breakfasts = filterMeals(m.breakfasts, diet, allergies);
+    var breakfasts = unique(filterMeals(breakfastBase, diet, allergies));
     var lunches    = unique(filterMeals(lunchBase,  diet, allergies));
     var dinners    = unique(filterMeals(dinnerBase, diet, allergies));
-    var snacksPool = filterMeals(m.snacks,     diet, allergies);
+    var snacksPool = unique(filterMeals(snackBase, diet, allergies));
 
-    var breakfastCycle = shuffled(breakfasts);
-    var snackCycle = shuffled(snacksPool);
+    var breakfastWeek = buildWeeklySequence(breakfasts, 7);
     var lunchWeek = buildWeeklySequence(lunches, 7);
     var dinnerWeek = buildWeeklySequence(dinners, 7);
-
-    var prevBreakfast = '';
-    var prevSnack = '';
+    var snackOneWeek = buildWeeklySequence(snacksPool, 7);
+    var snackTwoSeed = snacksPool.length > 1
+      ? snacksPool.slice(1).concat(snacksPool.slice(0, 1))
+      : snacksPool.slice();
+    var snackTwoWeek = buildWeeklySequence(snackTwoSeed, 7);
 
     return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(function (day, i) {
-      var breakfastPick = takeFromCycle(breakfasts, breakfastCycle, prevBreakfast);
-      breakfastCycle = breakfastPick.pool;
-      var breakfastMeal = breakfastPick.meal;
+      var breakfastMeal = breakfastWeek[i] || pick(breakfasts);
 
       var lunchMeal = lunchWeek[i] || pick(lunches);
       var dinnerMeal = dinnerWeek[i] || pick(dinners);
@@ -857,14 +981,12 @@
         if (alt) dinnerMeal = alt;
       }
 
-      var snackOnePick = takeFromCycle(snacksPool, snackCycle, prevSnack);
-      snackCycle = snackOnePick.pool;
-      var s1 = snackOnePick.meal;
-      var s2Choices = snacksPool.filter(function (s) { return s !== s1; });
-      var s2 = s2Choices.length ? pick(s2Choices) : s1;
-
-      prevBreakfast = breakfastMeal;
-      prevSnack = s1;
+      var s1 = snackOneWeek[i] || pick(snacksPool);
+      var s2 = snackTwoWeek[i] || pick(snacksPool);
+      if (snacksPool.length > 1 && s2 === s1) {
+        var snackAlt = snacksPool.find(function (s) { return s !== s1; });
+        if (snackAlt) s2 = snackAlt;
+      }
 
       return {
         day: day,
