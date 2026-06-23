@@ -5,7 +5,7 @@ import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.12.0/firebas
 
 // Your live, registered Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCDnej33wQp7wB6nGgBVgBsA-gVMRJHCqk", // Your real, active API Key!
+  apiKey: "AIzaSyCDnej33wQp7wB6nGgBVgBsA-gVMRJHCqk", 
   authDomain: "meal-planner-af67e.firebaseapp.com",
   projectId: "meal-planner-af67e",
   storageBucket: "meal-planner-af67e.firebasestorage.app",

@@ -352,10 +352,28 @@
   </main>
 
   <!-- Firebase Authentication and Database Script -->
+    <!-- FULLY SELF-CONTAINED FIREBASE AUTH SCRIPT (NO EXTERNAL CONFIG FILE NEEDED) -->
   <script type="module">
-    import { auth, db } from './firebase-config.js';
-    import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-    import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    // 1. Import Firebase directly from the Google CDN
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    // 2. Your live, verified Firebase configuration credentials
+    const firebaseConfig = {
+      apiKey: "AIzaSyCDnej33wQp7wB6nGgBVgBsA-gVMRJHCqk", 
+      authDomain: "meal-planner-af67e.firebaseapp.com",
+      projectId: "meal-planner-af67e",
+      storageBucket: "meal-planner-af67e.firebasestorage.app",
+      messagingSenderId: "351792466290",
+      appId: "1:351792466290:web:2b73762d3ac12c5752b5eb",
+      measurementId: "G-542223235"
+    };
+
+    // 3. Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     const provider = new GoogleAuthProvider();
 
@@ -368,17 +386,17 @@
     const signupBtn = document.getElementById('nav-signup-btn');
     const logoutBtn = document.getElementById('nav-logout-btn');
 
-    // 1. Monitor User Log In State
+    // 4. Monitor User Log In State
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User logged in: Show Logout & Profile, Hide Login & Sign Up
-        liLogin.style.display = 'none';
-        liSignup.style.display = 'none';
-        liLogout.style.display = 'list-item';
-        liProfile.style.display = 'list-item';
+        if (liLogin) liLogin.style.display = 'none';
+        if (liSignup) liSignup.style.display = 'none';
+        if (liLogout) liLogout.style.display = 'list-item';
+        if (liProfile) liProfile.style.display = 'list-item';
 
         try {
-          // Merge user session details securely into Firestore
+          // Sync user session details securely into Firestore database
           await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             name: user.displayName,
@@ -391,14 +409,14 @@
         }
       } else {
         // User logged out: Show Login & Sign Up, Hide Logout & Profile
-        liLogin.style.display = 'list-item';
-        liSignup.style.display = 'list-item';
-        liLogout.style.display = 'none';
-        liProfile.style.display = 'none';
+        if (liLogin) liLogin.style.display = 'list-item';
+        if (liSignup) liSignup.style.display = 'list-item';
+        if (liLogout) liLogout.style.display = 'none';
+        if (liProfile) liProfile.style.display = 'none';
       }
     });
 
-    // 2. Google Sign-In with event propagation stopped to prevent script conflicts
+    // 5. Google Sign-In with event propagation stopped to prevent script conflicts
     const loginWithGoogle = (e) => {
       e.preventDefault();
       e.stopPropagation(); // Prevents other scripts from canceling this event
@@ -408,18 +426,22 @@
         })
         .catch((error) => {
           console.error("Sign-in failed: ", error.message);
+          alert("Firebase Sign-In Error: " + error.message);
         });
     };
 
     if (loginBtn) loginBtn.addEventListener('click', loginWithGoogle);
     if (signupBtn) signupBtn.addEventListener('click', loginWithGoogle);
 
-    // 3. Handle Logout
+    // 6. Handle Logout
     if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         signOut(auth)
+          .then(() => {
+            console.log("Logged out successfully");
+          })
           .catch((error) => console.error("Sign-out failed: ", error.message));
       });
     }
