@@ -444,91 +444,131 @@
 
   var MEAL_PLANS = {
     'preteens': {
-      '1': { activity:'Low', calories:1600,
-        breakfasts:['Oatmeal with banana slices','Scrambled eggs with whole wheat toast','Yogurt parfait with berries','Whole-grain cereal with strawberries','Pancakes with fruit salad'],
-        lunches:   ['Turkey sandwich with carrots','Chicken rice bowl with veggies','Tomato soup with crackers','Pasta salad with chicken and veggies','Cheese quesadilla with salsa and salad'],
-        dinners:   ['Baked chicken with rice and green beans','Spaghetti with tomato sauce and salad','Beef tacos with lettuce','Salmon with mashed potatoes and broccoli','Stir-fry chicken with vegetables','Homemade pizza with veggie toppings'],
-        snacks:    ['Apple slices','Orange slices','Fresh berries','Banana','Fruit cup','Cucumber slices'] },
-      '2': { activity:'Moderate', calories:2000,
-        breakfasts:['Avocado toast with fruit','Oatmeal with berries','Whole grain waffles with yogurt','Smoothie bowl with banana','Egg sandwich with turkey'],
-        lunches:   ['Chicken wrap with veggies','Rice bowl with beef and broccoli','Turkey burger with roasted potatoes','Mac and cheese','Chicken rice bowl'],
-        dinners:   ['Grilled salmon with rice and asparagus','Chicken with broccoli','Beef stir-fry with noodles','Vegetable lasagna','Baked chicken with sweet potatoes','BBQ chicken with corn'],
-        snacks:    ['Granola bar','Cheese stick and grapes','Fruit and yogurt dip','Fruit bowl','Banana'] },
-      '3': { activity:'High', calories:2600,
-        breakfasts:['Large oatmeal bowl with nuts and fruit','Smoothie with oats and banana','French toast with berries','Large breakfast bowl with fruit'],
-        lunches:   ['Chicken burrito bowl with rice and beans','Beef pasta','Turkey sandwich with soup and fruit','Salmon rice bowl with vegetables','Mac and cheese with chicken'],
-        dinners:   ['Steak with mashed potatoes and vegetables','Chicken stir-fry with rice','Baked salmon with pasta salad','Beef tacos with rice and beans','Chicken parmesan with spaghetti','Shrimp fried rice with vegetables'],
-        snacks:    ['Banana','Fruit smoothie','Granola','Fruit cup','String cheese'] }
+      '1': { activity:'Normal', calories:1600,
+        breakfasts:['Oatmeal with banana slices and milk','Scrambled eggs with whole wheat toast','Yogurt parfait with granola and berries','Peanut butter toast with apple slices','Whole-grain cereal with milk and strawberries','Egg and cheese breakfast sandwich','Pancakes with fruit salad'],
+        lunches:['Turkey sandwich with carrots and cucumbers','Chicken rice bowl with veggies','Grilled cheese with tomato soup','Pasta salad with chicken and veggies','Tuna sandwich with apple slices','Cheese quesadilla with salsa and salad','Mini chicken burgers with sweet potato fries'],
+        dinners:['Baked chicken with rice and green beans','Spaghetti with tomato sauce and salad','Beef tacos with lettuce and cheese','Salmon with mashed potatoes and broccoli','Stir-fry chicken with vegetables and noodles','Homemade pizza with veggie toppings','Turkey meatballs with pasta'],
+        snacks:['Apple slices with peanut butter','Cheese and crackers','Yogurt cup','Banana smoothie','Orange slices','Trail mix','Fresh berries'] },
+      '2': { activity:'Medium', calories:2000,
+        breakfasts:['Avocado toast with scrambled eggs and fruit','Breakfast burrito with eggs and cheese','Oatmeal with nuts, berries, and milk','Whole grain waffles with yogurt','Bagel with cream cheese and strawberries','Smoothie bowl with granola and banana','Egg sandwich with turkey bacon'],
+        lunches:['Chicken wrap with veggies and hummus','Rice bowl with beef and broccoli','Pasta with grilled chicken and spinach','Turkey burger with roasted potatoes','Tuna pasta salad with vegetables','Cheese and chicken quesadilla with salad','Mac and cheese'],
+        dinners:['Grilled salmon with rice and asparagus','Chicken Alfredo with broccoli','Beef stir-fry with noodles','Vegetable lasagna','Shrimp tacos with avocado','Baked chicken with sweet potatoes','BBQ chicken with corn'],
+        snacks:['Greek yogurt','Peanut butter banana smoothie','Granola bar','Cheese stick and grapes','Hard-boiled eggs','Mixed nuts','Fruit and yogurt dip'] },
+      '3': { activity:'Extreme', calories:2600,
+        breakfasts:['Omelet with toast, fruit, and milk','Pancakes with eggs and turkey sausage','Breakfast sandwich with avocado','Smoothie with oats, banana, and peanut butter','French toast with berries and yogurt','Bagel sandwich with eggs and cheese','Large oatmeal bowl with nuts and fruit'],
+        lunches:['Chicken burrito bowl with rice and beans','Beef pasta with garlic bread','Turkey sandwich with soup and fruit','Grilled chicken wrap with potatoes','Salmon rice bowl with vegetables','Mac and cheese with chicken pieces','Meatball sub with salad'],
+        dinners:['Steak with mashed potatoes and vegetables','Chicken stir-fry with rice','Baked salmon with pasta salad','Beef tacos with rice and beans','Chicken parmesan with spaghetti','Homemade pizza with chicken toppings','Shrimp fried rice with vegetables'],
+        snacks:['Protein smoothie','Protein bar','Trail mix','Cheese cubes and crackers','Yogurt parfait','String cheese','Banana'] }
     },
     'teens': {
-      '1': { activity:'Low', calories:2000,
-        breakfasts:['Whole grain toast with fruit','Yogurt with berries','Avocado toast','Oatmeal with banana'],
-        lunches:   ['Turkey sandwich with veggies','Rice bowl with chicken and vegetables','Veggie pizza with salad','Burrito bowl with beans and rice'],
-        dinners:   ['Grilled chicken with roasted vegetables','Beef tacos with rice','Spaghetti with marinara','Stir-fry noodles with chicken','Salmon with quinoa and broccoli'],
-        snacks:    ['Apple slices','Fruit cup','Fruit smoothie','Popcorn','Melon'] },
-      '2': { activity:'Moderate', calories:2400,
-        breakfasts:['Protein pancakes','Protein smoothie with oats','Waffles with yogurt and berries','French toast'],
-        lunches:   ['Chicken burrito bowl','Turkey burger with sweet potato fries','Steak salad','Rice bowl with beef and broccoli','Quinoa bowl'],
-        dinners:   ['Steak with potatoes and vegetables','Salmon with rice and asparagus','Chicken Alfredo pasta','Beef stir-fry with noodles','Chicken parmesan with spaghetti'],
-        snacks:    ['Banana smoothie','Fruit bowl','Hummus and veggies','Fruit cup'] },
-      '3': { activity:'High', calories:3300,
-        breakfasts:['Large omelet with fruit','French toast with yogurt','Oatmeal with nuts and fruit'],
-        lunches:   ['Steak sandwich','Chicken pasta','Salmon rice bowl with avocado','Mac and cheese with grilled chicken'],
-        dinners:   ['Steak with rice and vegetables','Chicken pasta','Salmon and rice','Beef tacos','Shrimp fried rice','Baked chicken with mashed potatoes'],
-        snacks:    ['Chocolate banana','Fruit smoothie','Granola','Fruit cup'] }
+      '1': { activity:'Normal', calories:2000,
+        breakfasts:['Whole grain toast with eggs and fruit','Yogurt with granola and berries','Scrambled eggs and toast','Egg wrap with cheese','Avocado toast','Oatmeal with peanut butter and banana'],
+        lunches:['Turkey sandwich with veggies','Chicken Caesar wrap','Pasta salad with tuna','Rice bowl with chicken and vegetables','Grilled cheese with soup','Burrito bowl with beans and rice','Veggie pizza with salad'],
+        dinners:['Grilled chicken with roasted vegetables','Beef tacos with rice','Spaghetti with marinara','Tacos with black beans','Stir-fry noodles with chicken','Salmon with quinoa and broccoli','Chicken fajitas with peppers'],
+        snacks:['Apple slices with peanut butter','Yogurt cup','Granola bar','Fruit cup','Crackers and cheese','Fruit smoothie','Popcorn'] },
+      '2': { activity:'Medium', calories:2400,
+        breakfasts:['Avocado toast with eggs and fruit','Protein pancakes','Protein smoothie with oats','Greek yogurt parfait','Waffles with yogurt and berries','Breakfast sandwich','French toast'],
+        lunches:['Chicken burrito bowl','Pasta with grilled chicken and vegetables','Turkey burger with sweet potato fries','Steak salad','Rice bowl with beef and broccoli','Chicken quesadilla with salsa','Quinoa bowl'],
+        dinners:['Steak with potatoes and vegetables','Salmon with rice and asparagus','Chicken Alfredo pasta','Beef stir-fry with noodles','Shrimp tacos with avocado','Chicken parmesan with spaghetti','Vegetable lasagna'],
+        snacks:['Trail mix','Protein bar','Banana smoothie','Boiled eggs','Greek yogurt with berries','Fruit bowl','Hummus and veggies'] },
+      '3': { activity:'Extreme', calories:3300,
+        breakfasts:['Large omelet with toast and fruit','Pancakes with eggs and sausage','Bagel sandwich with eggs and cheese','French toast with yogurt','Breakfast burrito','Oatmeal with nuts, fruit, and milk','Cereal'],
+        lunches:['Steak sandwich','Chicken pasta with garlic bread','Pasta with chicken','Turkey club sandwich with soup','Beef burrito','Salmon rice bowl with avocado','Mac and cheese with grilled chicken'],
+        dinners:['Steak with rice and vegetables','Chicken pasta','Salmon and rice','Beef tacos','Shrimp fried rice','Baked chicken with mashed potatoes','Grilled chicken with veggies'],
+        snacks:['Protein shake','Cheese and crackers','Mixed nuts','Chocolate banana','Fruit smoothie','Yogurt','Granola'] }
     },
     'young-adults': {
-      '1': { activity:'Low', calories:2400,
-        breakfasts:['Avocado toast with poached eggs','Greek yogurt parfait with fruit','Berry smoothie','Whole-grain cereal','Pancakes with fruit'],
-        lunches:   ['Chicken salad','Rice bowl with salmon and vegetables','Quinoa and veggies','Veggie wrap','Burrito bowl with beans and avocado'],
-        dinners:   ['Grilled salmon with quinoa','Stir-fry chicken','Steak with sweet potatoes','Turkey meatballs with spaghetti','Beef tacos','Baked chicken with vegetables'],
-        snacks:    ['Fruit and nuts','Hummus and veggies','Smoothie','Rice cakes','Fruit cup'] },
-      '2': { activity:'Moderate', calories:2600,
-        breakfasts:['Protein pancakes','Smoothie bowl','Oatmeal with berries and nuts','French toast with strawberries','Avocado toast'],
-        lunches:   ['Grilled chicken wrap','Turkey burger with roasted potatoes','Chicken burrito bowl','Rice bowl','Veggie tacos'],
-        dinners:   ['Steak with mashed potatoes','Chicken Alfredo pasta','Salmon quinoa','Turkey meatballs','Homemade pizza with vegetables','Vegetable lasagna'],
-        snacks:    ['Banana','Fruit smoothie','Peanut butter toast','Fruit cup'] },
-      '3': { activity:'High', calories:3500,
-        breakfasts:['Large breakfast platter with eggs and fruit','Peanut butter banana smoothie with oats','Blueberry pancakes','French toast'],
-        lunches:   ['Steak bowl','Chicken pasta','Salmon salad','Tuna sandwich','Quinoa power bowl'],
-        dinners:   ['Steak with rice and roasted vegetables','Chicken stir-fry','Baked salmon with mashed potatoes','Beef tacos','Turkey burger with fries','Shrimp pasta'],
-        snacks:    ['Smoothie','Mixed nuts','Granola','Fruit cup'] }
+      '1': { activity:'Normal', calories:2400,
+        breakfasts:['Avocado toast with poached eggs','Greek yogurt parfait with fruit','Whole grain waffles with peanut butter','Berry smoothie','Whole-grain cereal','Breakfast wrap with spinach','Pancakes with fruit'],
+        lunches:['Chicken salad','Rice bowl with salmon and vegetables','Quinoa and veggies','Pasta with grilled chicken','Veggie wrap','Burrito bowl with beans and avocado','Chicken quesadilla with salad'],
+        dinners:['Grilled salmon with quinoa','Stir-fry chicken','Steak with sweet potatoes','Turkey meatballs with spaghetti','Beef tacos','Baked chicken with vegetables','Veggie chili'],
+        snacks:['Fruit and nuts','Yogurt','Cucumbers and ranch','Cheese and crackers','Smoothie','Hard-boiled egg','Rice cakes'] },
+      '2': { activity:'Medium', calories:2600,
+        breakfasts:['Protein pancakes','Breakfast burrito with eggs and cheese','Egg scramble','Cereal with nuts','Protein smoothie with oats and berries','French toast with strawberries','Avocado toast'],
+        lunches:['Grilled chicken wrap','Turkey burger with roasted potatoes','Pasta salad','Chicken burrito bowl','Rice bowl','Chicken quinoa','Veggie tacos'],
+        dinners:['Steak with mashed potatoes','Chicken Alfredo pasta','Salmon quinoa','Turkey meatballs','Homemade pizza with vegetables','Vegetable lasagna','Chicken parmesan'],
+        snacks:['Protein shake','Trail mix','Greek yogurt','Banana','Fruit smoothie','Cheese and crackers','Peanut butter toast'] },
+      '3': { activity:'Extreme', calories:3500,
+        breakfasts:['Large breakfast platter with eggs, toast, fruit, and potatoes','Peanut butter banana smoothie with oats','Blueberry pancakes','Breakfast burrito','Bagel and eggs','French toast','Cereal'],
+        lunches:['Steak bowl','Chicken pasta','Salmon salad','Chicken Alfredo with garlic bread','Tuna sandwich','Pasta with chicken','Quinoa power bowl'],
+        dinners:['Steak with rice and roasted vegetables','Chicken stir-fry','Baked salmon with mashed potatoes','Beef tacos','Turkey burger with fries','Shrimp pasta','BBQ chicken'],
+        snacks:['Protein bar','Smoothie','Mixed nuts','PB&J sandwich','Cheese and crackers','Granola','Trail mix'] }
     },
     'middle-aged-adults': {
-      '1': { activity:'Low', calories:2200,
-        breakfasts:['Oatmeal with berries and nuts','Avocado toast','Smoothie','Whole-grain cereal','Fruit and granola'],
-        lunches:   ['Grilled chicken salad','Quinoa bowl','Turkey sandwich with salad','Vegetable soup','Veggie wrap','Pasta with vegetables and chicken'],
-        dinners:   ['Grilled chicken with quinoa','Stir-fry tofu with vegetables','Vegetable curry with rice','Beef stir-fry with vegetables','Pasta primavera','Baked chicken with rice'],
-        snacks:    ['Fruit and nuts','Hummus and veggies','Smoothie','Granola bar','Rice cakes'] },
-      '2': { activity:'Moderate', calories:2400,
-        breakfasts:['Protein pancakes','Smoothie bowl','Oatmeal with berries and nuts','Waffles with yogurt and berries'],
-        lunches:   ['Salmon salad','Beef rice bowl with vegetables','Veggie bowl','Burrito bowl with avocado','Grilled chicken sandwich'],
-        dinners:   ['Chicken fajitas','Steak with sweet potatoes','Salmon quinoa','Beef tacos with beans','Turkey meatballs','Vegetable lasagna'],
-        snacks:    ['Nuts','Fruit smoothie','Boiled eggs','Fruit cup'] },
-      '3': { activity:'High', calories:3200,
-        breakfasts:['Omelette with fruit','Protein smoothie','French toast','Oatmeal with nuts and berries'],
-        lunches:   ['Steak salad','Chicken pasta','Salmon bowl','Beef burrito','Quinoa chicken bowl'],
-        dinners:   ['Steak with veggies','Chicken stir-fry','Baked salmon with mashed potatoes','Beef burgers with roasted potatoes','Chicken parmesan with spaghetti'],
-        snacks:    ['Smoothie','Granola','Fruit cup','Fruit and nuts'] }
+      '1': { activity:'Normal', calories:2200,
+        breakfasts:['Oatmeal with berries and nuts','Greek yogurt parfait','Avocado toast with eggs','Smoothie','Whole-grain cereal','Egg scramble','Fruit and granola'],
+        lunches:['Grilled chicken salad','Quinoa bowl','Turkey sandwich with salad','Vegetable soup','Grilled cheese','Veggie wrap','Pasta with vegetables and chicken'],
+        dinners:['Grilled chicken with quinoa','Stir-fry tofu','Grilled chicken','Vegetable curry','Beef stir-fry with vegetables','Pasta primavera','Baked chicken with rice'],
+        snacks:['Fruit and nuts','Greek yogurt','Hummus and veggies','Cheese and crackers','Smoothie','Granola bar','Rice cakes'] },
+      '2': { activity:'Medium', calories:2400,
+        breakfasts:['Protein pancakes','Smoothie bowl','Eggs and a muffin','Oatmeal with berries and nuts','Bagel with cream cheese and fruit','Waffles with yogurt and berries','Breakfast burrito'],
+        lunches:['Chicken Caesar wrap','Salmon salad','Beef rice bowl with vegetables','Veggie bowl','Burrito bowl with avocado','Grilled chicken sandwich','Chicken quesadilla with salsa'],
+        dinners:['Chicken fajitas','Steak with sweet potatoes','Salmon quinoa','Beef tacos with beans','Turkey meatballs','Vegetable lasagna','BBQ chicken'],
+        snacks:['Trail mix','Protein shake','Greek yogurt','Nuts','Fruit smoothie','Cheese and crackers','Eggs'] },
+      '3': { activity:'Extreme', calories:3200,
+        breakfasts:['Omelette with toast and fruit','Protein smoothie','French toast','Breakfast sandwich with eggs and cheese','Peanut butter toast','Bagel and eggs','Oatmeal with nuts and berries'],
+        lunches:['Steak salad','Chicken pasta','Salmon bowl','Beef burrito','Meatball sub with salad','Mac and cheese with grilled chicken','Quinoa chicken bowl'],
+        dinners:['Steak with veggies','Chicken stir-fry','Baked salmon with mashed potatoes','Beef burgers with roasted potatoes','Chicken parmesan with spaghetti','Turkey taco','Fish with veggies'],
+        snacks:['Protein shake','Cheese and fruit','Mixed nuts','Smoothie','Granola','Peanut butter banana','Fruit cup'] }
     },
     'older-adults': {
-      '1': { activity:'Low', calories:1800,
-        breakfasts:['Oatmeal with banana slices','Whole-grain toast with fruit','Smoothie','Cereal with fruit','Fruit and nuts'],
-        lunches:   ['Chicken soup','Vegetable stir-fry with rice','Tuna salad','Quinoa bowl','Veggie wrap','Pasta with marinara'],
-        dinners:   ['Spaghetti and meatballs','Grilled chicken with salad','Veggie tacos','Stir-fry tofu and vegetables','Baked salmon','Grilled chicken with roasted vegetables'],
-        snacks:    ['Fresh fruit','Hummus and carrots','Mixed berries','Cucumbers','Fruit bowl','Smoothie'] },
-      '2': { activity:'Moderate', calories:2200,
-        breakfasts:['Oatmeal with almonds and berries','Smoothie','Waffles with yogurt','Pancakes with fruit'],
-        lunches:   ['Salmon salad','Quinoa and veggies','Turkey sandwich','Pasta salad','Burrito bowl with avocado'],
-        dinners:   ['Grilled salmon','Chicken stir-fry','Pasta primavera','Beef tacos','Homemade pizza','Turkey meatballs'],
-        snacks:    ['Nuts','Smoothie','Fruit cup','Granola bar'] },
-      '3': { activity:'High', calories:3000,
-        breakfasts:['Large omelet with fruit','Protein smoothie','French toast','Oatmeal with nuts and berries'],
-        lunches:   ['Steak salad','Chicken pasta','Salmon rice bowl with vegetables','Quinoa power bowl'],
-        dinners:   ['Steak with vegetables','Chicken parmesan with spaghetti','Salmon and rice','Beef tacos','Shrimp pasta','Turkey burger'],
-        snacks:    ['Smoothie','Mixed nuts','Fruit cup','Granola'] }
+      '1': { activity:'Normal', calories:1800,
+        breakfasts:['Oatmeal with banana slices','Greek yogurt with berries and granola','Whole-grain toast and scrambled eggs','Smoothie','Cereal with milk and fruit','Fruit and nuts','French toast with fruit'],
+        lunches:['Chicken soup','Vegetable stir-fry with rice','Tuna salad','Quinoa bowl','Veggie wrap','Pasta','Turkey sandwich'],
+        dinners:['Spaghetti and meatballs','Grilled chicken','Veggie tacos','Stir-fry tofu and vegetables','Soup and caesar salad','Baked salmon','Grilled chicken with roasted vegetables'],
+        snacks:['Fruit','Greek yogurt','Hummus and carrots','Mixed berries','Cucumbers and ranch','Fruit bowl','Smoothie'] },
+      '2': { activity:'Medium', calories:2200,
+        breakfasts:['Egg and avocado toast','Oatmeal with almonds and berries','Smoothie','Waffles with yogurt','Breakfast burrito','Pancakes with fruit','Bagel with cream cheese and fruit'],
+        lunches:['Salmon salad','Chicken Caesar wrap','Quinoa and veggies','Turkey sandwich','Pasta salad','Burrito bowl with avocado','Veggie soup'],
+        dinners:['Grilled salmon','Chicken stir-fry','Pasta primavera','Beef tacos','Pizza','Turkey meatballs','Vegetable lasagna'],
+        snacks:['Trail mix','Greek yogurt','Nuts','Smoothie','Eggs','Fruit cup','Protein bar'] },
+      '3': { activity:'Extreme', calories:3000,
+        breakfasts:['Large omelet with toast and fruit','Protein smoothie','French toast','Breakfast burrito','Pancakes with sausage','Bagel and eggs','Oatmeal with nuts and berries'],
+        lunches:['Steak salad','Chicken pasta with garlic bread','Salmon rice bowl with vegetables','Beef burrito','Mac and cheese with grilled chicken','Shrimp salad','Quinoa power bowl'],
+        dinners:['Steak with vegetables','Chicken parmesan with spaghetti','Salmon and rice','Beef tacos','Shrimp pasta','Turkey burger','Baked fish'],
+        snacks:['Protein shake','Smoothie','Mixed nuts','Cucumbers and ranch dip','Granola','Fruit cup','Trail mix'] }
     }
   };
+
+  var EXTRA_VEG_LUNCHES = [
+    'Chickpea salad wrap',
+    'Lentil soup with whole grain toast',
+    'Caprese sandwich with tomato basil soup',
+    'Vegetable stir-fry rice bowl',
+    'Paneer tikka wrap',
+    'Black bean burrito bowl',
+    'Falafel wrap with salad'
+  ];
+
+  var EXTRA_VEG_DINNERS = [
+    'Vegetable stir-fry with tofu and rice',
+    'Chickpea curry with brown rice',
+    'Mushroom and spinach pasta',
+    'Paneer and vegetable skewers with quinoa',
+    'Lentil shepherd pie',
+    'Black bean tacos with corn salsa',
+    'Stuffed bell peppers with beans and rice'
+  ];
+
+  var EXTRA_VEGAN_LUNCHES = [
+    'Quinoa chickpea salad bowl',
+    'Vegan burrito bowl with black beans',
+    'Tofu veggie wrap with hummus',
+    'Lentil and spinach soup with whole grain toast',
+    'Avocado bean salad sandwich',
+    'Vegan pasta primavera',
+    'Falafel and tabbouleh bowl'
+  ];
+
+  var EXTRA_VEGAN_DINNERS = [
+    'Tofu vegetable stir-fry with brown rice',
+    'Vegan lentil bolognese with pasta',
+    'Chana masala with basmati rice',
+    'Stuffed sweet potatoes with black beans',
+    'Vegan chili with cornbread',
+    'Mushroom tofu tacos with salsa',
+    'Roasted vegetable quinoa bowl'
+  ];
 
   function matchesDiet(text, pref) {
     if (!pref || pref === 'none' || pref === 'non-vegetarian') return true;
@@ -564,6 +604,30 @@
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
   function shuffled(arr) {
     return arr.slice().sort(function () { return Math.random() - 0.5; });
+  }
+  function unique(arr) {
+    return arr.filter(function (item, idx) { return arr.indexOf(item) === idx; });
+  }
+  function buildWeeklySequence(pool, count) {
+    if (!pool.length) return [];
+    var seq = [];
+    var bag = shuffled(pool);
+    for (var i = 0; i < count; i++) {
+      if (!bag.length) bag = shuffled(pool);
+
+      var last = seq.length ? seq[seq.length - 1] : '';
+      var prev = seq.length > 1 ? seq[seq.length - 2] : '';
+
+      var preferred = bag.filter(function (x) { return x !== last && x !== prev; });
+      var fallback = bag.filter(function (x) { return x !== last; });
+      var choices = preferred.length ? preferred : (fallback.length ? fallback : bag);
+
+      var meal = pick(choices);
+      var idx = bag.indexOf(meal);
+      if (idx >= 0) bag.splice(idx, 1);
+      seq.push(meal);
+    }
+    return seq;
   }
   function takeFromCycle(basePool, statePool, previous) {
     var pool = statePool && statePool.length ? statePool : shuffled(basePool);
@@ -601,43 +665,60 @@
     var g  = getAgeGroup(age);
     var c  = getActivityChoice(parseFloat(activity));
     var m  = MEAL_PLANS[g.key][c];
+
+    var lunchBase = m.lunches.slice();
+    var dinnerBase = m.dinners.slice();
+
+    if (diet === 'vegetarian') {
+      lunchBase = lunchBase.concat(EXTRA_VEG_LUNCHES);
+      dinnerBase = dinnerBase.concat(EXTRA_VEG_DINNERS);
+    }
+    if (diet === 'vegan') {
+      lunchBase = lunchBase.concat(EXTRA_VEGAN_LUNCHES);
+      dinnerBase = dinnerBase.concat(EXTRA_VEGAN_DINNERS);
+    }
+
     var breakfasts = filterMeals(m.breakfasts, diet, allergies);
-    var lunches    = filterMeals(m.lunches,    diet, allergies);
-    var dinners    = filterMeals(m.dinners,    diet, allergies);
+    var lunches    = unique(filterMeals(lunchBase,  diet, allergies));
+    var dinners    = unique(filterMeals(dinnerBase, diet, allergies));
     var snacksPool = filterMeals(m.snacks,     diet, allergies);
 
-    var lunchCycle = shuffled(lunches);
-    var dinnerCycle = shuffled(dinners);
-    var prevLunch = '';
-    var prevDinner = '';
+    var breakfastCycle = shuffled(breakfasts);
+    var snackCycle = shuffled(snacksPool);
+    var lunchWeek = buildWeeklySequence(lunches, 7);
+    var dinnerWeek = buildWeeklySequence(dinners, 7);
 
-    return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(function (day) {
-      var lunchPick = takeFromCycle(lunches, lunchCycle, prevLunch);
-      lunchCycle = lunchPick.pool;
-      var lunchMeal = lunchPick.meal;
+    var prevBreakfast = '';
+    var prevSnack = '';
 
-      var dinnerPick = takeFromCycle(dinners, dinnerCycle, prevDinner);
-      dinnerCycle = dinnerPick.pool;
-      var dinnerMeal = dinnerPick.meal;
+    return ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(function (day, i) {
+      var breakfastPick = takeFromCycle(breakfasts, breakfastCycle, prevBreakfast);
+      breakfastCycle = breakfastPick.pool;
+      var breakfastMeal = breakfastPick.meal;
+
+      var lunchMeal = lunchWeek[i] || pick(lunches);
+      var dinnerMeal = dinnerWeek[i] || pick(dinners);
 
       if (dinners.length > 1 && dinnerMeal === lunchMeal) {
         var alt = dinners.find(function (x) { return x !== lunchMeal; });
         if (alt) dinnerMeal = alt;
       }
 
-      prevLunch = lunchMeal;
-      prevDinner = dinnerMeal;
-
-      var s1 = pick(snacksPool);
+      var snackOnePick = takeFromCycle(snacksPool, snackCycle, prevSnack);
+      snackCycle = snackOnePick.pool;
+      var s1 = snackOnePick.meal;
       var s2Choices = snacksPool.filter(function (s) { return s !== s1; });
       var s2 = s2Choices.length ? pick(s2Choices) : s1;
+
+      prevBreakfast = breakfastMeal;
+      prevSnack = s1;
 
       return {
         day: day,
         ageGroup: g.label,
         activityLabel: m.activity,
         calories: m.calories,
-        breakfast: pick(breakfasts),
+        breakfast: breakfastMeal,
         lunch: lunchMeal,
         dinner: dinnerMeal,
         snacks: [s1, s2]
@@ -821,7 +902,7 @@
       });
     }
 
-    plannerForm.addEventListener('submit', function (e) {
+    plannerForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       var ageEl      = document.getElementById('age');
@@ -877,6 +958,11 @@
         weight: weight, activity: activity, diet: diet,
         goals: goal, allergies: allergies
       });
+
+      // If the Firebase form module is loaded, persist this plan to Firestore.
+      if (typeof window.firebaseSaveGeneratedPlan === 'function') {
+        await window.firebaseSaveGeneratedPlan(payload);
+      }
 
       window.location.href = 'result.html';
     });

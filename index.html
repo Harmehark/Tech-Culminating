@@ -296,5 +296,79 @@
   </main>
 
   <script src="script.js" defer></script>
+    <!-- Firebase Authentication and Database Script -->
+  <script type="module">
+    // 1. Import your shared Firebase config
+    import { auth, db } from './firebase-config.js';
+    
+    // Import required Firebase modular SDK methods
+    import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    const provider = new GoogleAuthProvider();
+
+    // Get the HTML Elements for your Auth menu links
+    const liLogin = document.getElementById('li-login-btn');
+    const liSignup = document.getElementById('li-signup-btn');
+    const liLogout = document.getElementById('li-logout-btn');
+    const liProfile = document.getElementById('li-profile-btn');
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    const signupBtn = document.getElementById('nav-signup-btn');
+    const logoutBtn = document.getElementById('nav-logout-btn');
+
+    // 2. Track Auth State (Dynamic UI toggling)
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User logged in: Show Logout & Profile, Hide Login & Sign Up
+        liLogin.style.display = 'none';
+        liSignup.style.display = 'none';
+        liLogout.style.display = 'list-item';
+        liProfile.style.display = 'list-item';
+
+        // 3. Save the user's account details to Firestore under their UID
+        try {
+          // 'merge: true' keeps their saved meal plans safe when logging back in
+          await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            lastLogin: new Date()
+          }, { merge: true });
+          console.log("User details saved to database successfully.");
+        } catch (e) {
+          console.error("Error syncing user to Firestore: ", e);
+        }
+      } else {
+        // User logged out: Show Login & Sign Up, Hide Logout & Profile
+        liLogin.style.display = 'list-item';
+        liSignup.style.display = 'list-item';
+        liLogout.style.display = 'none';
+        liProfile.style.display = 'none';
+      }
+    });
+
+    // 4. Handle Google Sign-In Popup
+    const loginWithGoogle = (e) => {
+      e.preventDefault();
+      signInWithPopup(auth, provider)
+        .catch((error) => console.error("Sign-in failed: ", error.message));
+    };
+
+    if (loginBtn) loginBtn.addEventListener('click', loginWithGoogle);
+    if (signupBtn) signupBtn.addEventListener('click', loginWithGoogle);
+
+    // 5. Handle Sign Out
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        signOut(auth)
+          .catch((error) => console.error("Sign-out failed: ", error.message));
+      });
+    }
+  </script>
+
+  <!-- Keep your existing script import below the Firebase code -->
+  <script src="script.js" defer></script>
 </body>
 </html>
